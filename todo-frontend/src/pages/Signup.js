@@ -40,7 +40,7 @@ function Signup() {
         }
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/auth/auth/signup", {
+            const response = await axios.post("http://https://to-do-list-0f6z.onrender.com/auth/auth/signup", {
                 name,
                 email,
                 username,

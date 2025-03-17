@@ -13,7 +13,7 @@ const handleDeleteAccount = async () => {
 if (window.confirm("Are you sure you want to delete your account?")) {
 try {
     const token = localStorage.getItem("token");
-    await axios.delete("http://127.0.0.1:8000/auth/auth/delete", {
+    await axios.delete("http://https://to-do-list-0f6z.onrender.com/auth/auth/delete", {
     headers: { Authorization: `Bearer ${token}` },
     });
     localStorage.removeItem("token");
@@ -57,7 +57,7 @@ const ws = useRef(null);
 useEffect(() => {
 const fetchUsers = async () => {
     try {
-    const response = await axios.get("http://127.0.0.1:8000/auth/auth/all");
+    const response = await axios.get("http://https://to-do-list-0f6z.onrender.com/auth/auth/all");
     const usersData = response.data.users.filter(
         (user) =>
         user.username.toLowerCase() !== currentUser.toLowerCase()
@@ -76,7 +76,7 @@ if (ws.current) {
     setChat([]);
 }
 if (!selectedReceiver) return;
-const wsUrl = `ws://localhost:8000/ws/chat/${currentUser}/${selectedReceiver}`;
+const wsUrl = `ws://https://to-do-list-0f6z.onrender.com/ws/chat/${currentUser}/${selectedReceiver}`;
 console.log("Connecting to WebSocket at:", wsUrl);
 ws.current = new WebSocket(wsUrl);
 

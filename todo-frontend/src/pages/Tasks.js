@@ -167,7 +167,7 @@ function Tasks() {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/tasks", {
+      const response = await axios.get("http:/https://to-do-list-0f6z.onrender.com/tasks", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const tasksData = Array.isArray(response.data)
