@@ -1,0 +1,16 @@
+# Node modules (for React)
+todo-frontend/node_modules/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
+
+# OS files
+.DS_Store
+
+# Environment files (don’t push secrets)
+.env
