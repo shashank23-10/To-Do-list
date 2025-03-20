@@ -605,7 +605,7 @@ function toTitleCase(str) {
                                       {task.description}
                                       {task.dueDate && (
                                         <span className="due-date">
-                                          (Due: {task.dueDate})
+                                          Due: {task.dueDate}
                                         </span>
                                       )}
                                       {task.priority && (

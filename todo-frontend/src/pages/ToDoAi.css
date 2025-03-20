@@ -6,15 +6,6 @@ font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 background: #ece5dd;
 }
 
-/* Header */
-.header {
-display: flex;
-align-items: center;
-justify-content: space-between;
-background: #ededed;
-padding: 15px 20px;
-border-bottom: 1px solid #ddd;
-}
 
 .logo {
 height: 50px;

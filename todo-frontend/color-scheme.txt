@@ -1,0 +1,22 @@
+1. Primary Blue Shades (Base Colors)
+#0D47A1 (Deep Royal Blue) - Great for header background and buttons.
+#1976D2 (Bright Azure Blue) - Good for active contacts and highlighted elements.
+#2196F3 (Sky Blue) - Can be used for secondary UI elements or hover effects.
+
+2. Secondary Blue Tones (Subtle Support Colors)
+#BBDEFB (Soft Pastel Blue) - Ideal for chat bubbles or input backgrounds.
+#E3F2FD (Ultra-Light Blue) - Works well as a chat background or sidebar base.
+#1565C0 (Darker Blue) - Can be used for text or dividers.
+
+3. Complementary & Accent Colors
+#82B1FF (Neon Blue) - Excellent for call-to-action buttons, active states.
+#64B5F6 (Soft Cyan Blue) - Works well for icons, badges, and hover effects.
+#1E88E5 (Rich Blue) - Ideal for selected items, headers, or icons.
+#263238 (Dark Slate Grey) - Complements the blues, good for text and icons.
+
+Usage Suggestions
+Headers & Buttons → #0D47A1, #1976D2
+Sidebar & Backgrounds → #E3F2FD, #BBDEFB
+Chat Messages → #2196F3 (sent), #BBDEFB (received)
+Icons & Highlights → #82B1FF, #64B5F6
+Text & Borders → #263238, #1565C0
