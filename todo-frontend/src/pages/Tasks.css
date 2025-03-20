@@ -1,6 +1,4 @@
-/* ==========================================================================
-Global Reset and Base Styles
-========================================================================== */
+/* Global Reset and Base Styles */
 * {
 margin: 0;
 padding: 0;
@@ -330,6 +328,33 @@ transition: transform 0.2s ease;
 
 .tasks-pin:hover {
 transform: scale(1.2);
+}
+
+.priority{
+    min-width: 80px;
+    max-width: 80px;
+    padding: 2.5px 10px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+}
+
+.task-display .priority{
+    min-width: 80px;
+    max-width: 80px;
+    padding: 2.5px 10px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+}
+
+.board-container .priority{
+    min-width: 80px;
+    max-width: 80px;
+    padding: 2.5px 10px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
 }
 
 /* ==========================================================================

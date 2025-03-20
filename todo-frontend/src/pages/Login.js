@@ -5,90 +5,94 @@ import "./Login.css"; // Import CSS file
 import kpmglogo from "../images/kpmg-logo.png";
 
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [isAdmin, setIsAdmin] = useState(false);
-    const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loginMessage, setLoginMessage] = useState(""); // State to hold the message
+  const navigate = useNavigate();
 
-    const handleLogin = async () => {
-        try {
-            const response = await axios.post(
-                "https://to-do-list-0f6z.onrender.com/auth/auth/login",
-                JSON.stringify({ username, password }),
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            
-            localStorage.setItem("token", response.data.access_token);
-            alert("Login successful!");
-            
-            if (isAdmin) {
-                navigate("/users");
-            } else {
-                navigate("/tasks"); // Redirect normal users to tasks
-            }
-        } catch (error) {
-            console.error("Login error:", error.response || error.message);
-            alert(error.response?.data?.detail || "Login failed");
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/auth/auth/login",
+        JSON.stringify({ username, password }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-    };
+      );
 
-    return (
-        <div className="login-container">
-            <div className="login-box">
-                <img className="login-logo" src={kpmglogo} alt="KPMG Logo" />
-                <h2 className="login-title">Login</h2>
-                <p className="login-subtitle">Sign in to your account</p>
-                
-                <input
-                    type="text"
-                    placeholder="Username"
-                    className="login-input"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                
-                <input
-                    type="password"
-                    placeholder="Password"
-                    className="login-input"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+      localStorage.setItem("token", response.data.access_token);
+      setTimeout(() => {
+        if (isAdmin) {
+          navigate("/users");
+        } else {
+          navigate("/tasks"); // Redirect normal users to tasks
+        }
+      }, 1000);
+    } catch (error) {
+      console.error("Login error:", error.response || error.message);
+      setLoginMessage(
+        error.response?.data?.detail || "Login failed"
+      );
+    }
+  };
 
-                <div className="admin-checkbox">
-                    <input
-                        type="checkbox"
-                        id="admin"
-                        checked={isAdmin}
-                        onChange={() => setIsAdmin(!isAdmin)}
-                    />
-                    <label htmlFor="admin">Login as Admin</label>
-                </div>
-                
-                <button
-                    className="login-button"
-                    onClick={handleLogin}
-                >
-                    Login
-                </button>
+  return (
+    <div className="login-container">
+      <div className="login-box">
+        <img className="login-logo" src={kpmglogo} alt="KPMG Logo" />
+        <h2 className="login-title">Login</h2>
+        <p className="login-subtitle">Sign in to your account</p>
 
-                <div className="login-footer">
-                    <p>Don't have an account?</p>
-                    <button 
-                        className="login-signup-button" 
-                        onClick={() => navigate("/signup")}
-                    >
-                        Signup here
-                    </button>
-                </div>
+        <input
+          type="text"
+          placeholder="Username"
+          className="login-input"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-            </div>
+        <input
+          type="password"
+          placeholder="Password"
+          className="login-input"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <div className="admin-checkbox">
+          <input
+            type="checkbox"
+            id="admin"
+            checked={isAdmin}
+            onChange={() => setIsAdmin(!isAdmin)}
+          />
+          <label htmlFor="admin">Login as Admin</label>
         </div>
-    );
+
+        <button className="login-button" onClick={handleLogin}>
+          Login
+        </button>
+
+        {/* Conditionally render the login message */}
+        {loginMessage && (
+          <div className="login-message">{loginMessage}</div>
+        )}
+
+        <div className="login-footer">
+          <p>Don't have an account?</p>
+          <button
+            className="login-signup-button"
+            onClick={() => navigate("/signup")}
+          >
+            Signup here
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Login;

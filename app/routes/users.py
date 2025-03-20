@@ -5,7 +5,7 @@ from app.database import user_collection
 
 router = APIRouter()
 
-# ✅ Define User Schema
+# User Schema
 class UserCreate(BaseModel):
     name: str
     email: EmailStr
@@ -16,7 +16,7 @@ class UserLogin(BaseModel):
     username: str
     password: str
 
-# ✅ Register New User
+# Register New User
 @router.post("/signup")
 async def register_user(user: UserCreate):
     existing_user = await user_collection.find_one({"username": user.username})
@@ -34,7 +34,7 @@ async def register_user(user: UserCreate):
     await user_collection.insert_one(new_user)
     return {"message": "User created successfully"}
 
-# ✅ Login User & Generate JWT Token
+# Login User & Generate JWT Token
 @router.post("/login", tags=["Users"])
 async def login_user(user: UserLogin):
     db_user = await user_collection.find_one({"username": user.username})

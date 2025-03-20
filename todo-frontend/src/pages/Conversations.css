@@ -1,3 +1,5 @@
+/* Conversations.css */
+
 body {
     margin: 0;
     padding: 0;
@@ -6,15 +8,15 @@ body {
     
 .chat-page {
     display: flex;
-    height: 85vh;
+    height: 88vh;
     background: #ece5dd;
 }
     
-    /* Sidebar (Contacts List) */
+/* Sidebar (Contacts List) */
 .chat-sidebar {
     width: 25%;
     background: #f0f0f0;
-    border-right: 1px solid #ddd;
+    border-right: 5px solid #ddd;
     overflow-y: auto;
 }
     
@@ -22,7 +24,7 @@ body {
     background: #ededed;
     padding: 15px;
     margin: 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 5px solid #ddd;
 }
     
 .contacts-list {
@@ -40,7 +42,8 @@ body {
     transition: background 0.3s;
 }
 
-.contact-item:hover, .contact-item.active {
+.contact-item:hover,
+.contact-item.active {
     background: #ddd;
 }
     
@@ -61,7 +64,7 @@ body {
     font-size: 16px;
 }
 
-/* Chat Container*/
+/* Chat Container */
 .chat-container {
     width: 75%;
     display: flex;
@@ -99,6 +102,8 @@ body {
     border-radius: 20px;
     max-width: 60%;
     word-wrap: break-word;
+    display: flex;
+    align-items: center;
 }
 
 .chat-message.sent {
@@ -116,7 +121,29 @@ body {
     border-bottom-left-radius: 0;
     text-align: left;
 }
-    
+
+/* New: Message DP inside chat bubble */
+.chat-message .message-dp {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: #4a90e2;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 30px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+/* New: Message text styling inside chat bubble */
+.chat-message .message-text {
+    display: inline-block;
+    font-size: 14px;
+}
+
 /* Chat Input Area */
 .chat-input-area {
     display: flex;
@@ -135,15 +162,18 @@ body {
     font-size: 16px;
 }
     
+/* Updated Send Button: now a circular button with an icon */
 .chat-input-area button {
-    margin-left: 10px;
-    padding: 10px 20px;
+    margin: 0 10px;
+    padding: 10px;
     border: none;
     background: #4a90e2;
     color: #fff;
-    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 /* No Chat Selected Message */
@@ -154,4 +184,48 @@ body {
     justify-content: center;
     font-size: 18px;
     color: #888;
+}
+
+/* Header Styles (unchanged) */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ededed;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    height: 40px;
+}
+
+.profile-menu {
+    position: relative;
+}
+
+.profile-button {
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dropdown-item:hover {
+    background: #f0f0f0;
 }

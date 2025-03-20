@@ -10,3 +10,4 @@ database = client["fastapi_crud"]
 
 todo_collection = database["todos"]
 user_collection = database["users"]
+ai_collection = database["ai"]

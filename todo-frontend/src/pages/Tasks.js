@@ -167,7 +167,7 @@ function Tasks() {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get("http:/https://to-do-list-0f6z.onrender.com/tasks", {
+      const response = await axios.get("http://127.0.0.1:8000/tasks", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const tasksData = Array.isArray(response.data)
@@ -392,6 +392,11 @@ function Tasks() {
     }
   };
 
+function toTitleCase(str) {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
   return (
     <Fragment>
       <header className="header">
@@ -401,12 +406,15 @@ function Tasks() {
             className="profile-button"
             onClick={() => setShowProfileDropdown(!showProfileDropdown)}
           >
-            <FaUser /> {currentUser}
+            <FaUser /> {toTitleCase(currentUser)}
           </button>
           {showProfileDropdown && (
             <div className="profile-dropdown">
               <button className="dropdown-item" onClick={() => window.location.href = '/conversations'}>
                 Conversations
+              </button>
+              <button className="dropdown-item" onClick={() => window.location.href = '/todoai'}>
+                Llama-Ai
               </button>
               <button className="dropdown-item" onClick={handleLogout}>
                 Logout
@@ -506,9 +514,6 @@ function Tasks() {
                 <button onClick={() => setView("calendar")}>
                   <FaCalendar /> Calendar View
                 </button>
-                <button onClick={() => setView("tablet")}>
-                  <FaTabletAlt /> Tablet View
-                </button>
               </div>
               {view === "list" && (
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -607,7 +612,7 @@ function Tasks() {
                                         <span
                                           className="priority"
                                           style={{
-                                            color:
+                                            background:
                                               task.priority === "Low"
                                                 ? "green"
                                                 : task.priority === "Medium"
@@ -615,7 +620,7 @@ function Tasks() {
                                                 : "red",
                                           }}
                                         >
-                                          [Priority: {task.priority}]
+                                          {task.priority}
                                         </span>
                                       )}
                                     </div>
@@ -754,7 +759,7 @@ function Tasks() {
                                 <p
                                   className="priority"
                                   style={{
-                                    color:
+                                    background:
                                       task.priority === "Low"
                                         ? "green"
                                         : task.priority === "Medium"
@@ -762,7 +767,7 @@ function Tasks() {
                                         : "red",
                                   }}
                                 >
-                                  Priority: {task.priority}
+                                  {task.priority}
                                 </p>
                               )}
                             </div>
@@ -913,7 +918,7 @@ function Tasks() {
                                             <p
                                               className="priority"
                                               style={{
-                                                color:
+                                                background:
                                                   task.priority === "Low"
                                                     ? "green"
                                                     : task.priority === "Medium"
@@ -921,7 +926,7 @@ function Tasks() {
                                                     : "red",
                                               }}
                                             >
-                                              Priority: {task.priority}
+                                              {task.priority}
                                             </p>
                                           )}
                                         </div>
@@ -998,246 +1003,13 @@ function Tasks() {
                   setCurrentMonth={setCurrentMonth}
                 />
               )}
-              {view === "tablet" && (
-                <div className="tablet-container">
-                  {["Low", "Medium", "High"].map((prio) => (
-                    <div className="tablet-column" key={prio}>
-                      <h2>{prio} Priority</h2>
-                      <div className="tablet-tasks">
-                        {displayTasks.filter((task) => task.priority === prio)
-                          .length === 0 ? (
-                          <p>No {prio} tasks found.</p>
-                        ) : (
-                          displayTasks
-                            .filter((task) => task.priority === prio)
-                            .map((task) => (
-                              <div
-                                key={task._id}
-                                className={`task-card ${
-                                  task.completed ? "completed" : ""
-                                }`}
-                              >
-                                <div className="task-display">
-                                  <h3>{task.title}</h3>
-                                  <p>{task.description}</p>
-                                  {task.dueDate && (
-                                    <p className="due-date">
-                                      Due: {task.dueDate}
-                                    </p>
-                                  )}
-                                  {task.priority && (
-                                    <p className="priority">
-                                      Priority: {task.priority}
-                                    </p>
-                                  )}
-                                </div>
-                                <div className="task-actions">
-                                  <button
-                                    onClick={() => {
-                                      setEditingTask(task._id);
-                                      setEditTitle(task.title);
-                                      setEditDescription(task.description);
-                                      setEditDueDate(task.dueDate || "");
-                                      setEditPriority(
-                                        task.priority || "Medium"
-                                      );
-                                    }}
-                                    className="tasks-edit"
-                                  >
-                                    <FaEdit />
-                                  </button>
-                                  <button
-                                    className="tasks-pin"
-                                    onClick={() => togglePinTask(task)}
-                                  >
-                                    {task.pinned ? (
-                                      <FaThumbtack
-                                        style={{
-                                          color: "blue",
-                                          marginRight: "5px",
-                                        }}
-                                      />
-                                    ) : (
-                                      <FaThumbtack
-                                        style={{
-                                          color: "gray",
-                                          marginRight: "5px",
-                                        }}
-                                      />
-                                    )}
-                                  </button>
-                                  <button
-                                    className="tasks-delete"
-                                    onClick={() => deleteTask(task._id)}
-                                  >
-                                    <FaTrash />
-                                  </button>
-                                </div>
-                              </div>
-                            ))
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         </div>
       </div>
-      <ChatbotWidget />
     </Fragment>
   );
 }
 
-// -----------------------------------------------------------------------------
-// Chatbot Widget 
-// -----------------------------------------------------------------------------
-function ChatbotWidget() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hello! How can I help you today?" },
-  ]);
-  const [input, setInput] = useState("");
-
-  const toggleChatbot = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const sendMessage = (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    // Add user's message
-    setMessages((prev) => [...prev, { sender: "user", text: input }]);
-    const userMessage = input.trim();
-    setInput("");
-
-    // Bot reply
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { sender: "bot", text: `${userMessage}, we haven't set up the backend yet.` },
-      ]);
-    }, 800);
-  };
-
-  return (
-    <>
-      <style>{`
-        .chatbot-container {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          width: 400px;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-          border-radius: 8px;
-          overflow: hidden;
-          font-family: sans-serif;
-          z-index: 9999;
-          background: #fff;
-        }
-        .chatbot-header {
-          background: #4c87ff;
-          color: #fff;
-          padding: 10px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .chatbot-body {
-          background: #fff;
-          max-height: 400px;
-          display: flex;
-          flex-direction: column;
-        }
-        .chatbot-messages {
-          flex: 1;
-          padding: 10px;
-          overflow-y: auto;
-        }
-        .chatbot-input-area {
-          display: flex;
-          border-top: 1px solid #ccc;
-        }
-        .chatbot-input-area input {
-          flex: 1;
-          padding: 10px;
-          border: none;
-          outline: none;
-        }
-        .chatbot-input-area button {
-          background: #4c87ff;
-          color: #fff;
-          border: none;
-          padding: 0 15px;
-          cursor: pointer;
-        }
-        .chat-message {
-          margin-bottom: 8px;
-          line-height: 1.4;
-        }
-        .chat-message.bot {
-          text-align: left;
-        }
-        .chat-message.user {
-          text-align: right;
-        }
-        .chatbot-collapsed {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          background: #4c87ff;
-          color: #fff;
-          width: 120px;
-          text-align: center;
-          padding: 10px;
-          border-radius: 30px;
-          cursor: pointer;
-          z-index: 9999;
-        }
-      `}</style>
-
-      {/* If chatbot is closed - small bubble */}
-      {!isOpen && (
-        <div className="chatbot-collapsed" onClick={toggleChatbot}>
-          Chat with us
-        </div>
-      )}
-
-      {/* If chatbot is open - full widget */}
-      {isOpen && (
-        <div className="chatbot-container">
-          <div className="chatbot-header" onClick={toggleChatbot}>
-            <strong>Chat with us</strong>
-            <span style={{ fontSize: "1.2rem", cursor: "pointer" }}>×</span>
-          </div>
-          <div className="chatbot-body">
-            <div className="chatbot-messages">
-              {messages.map((msg, idx) => (
-                <div
-                  key={idx}
-                  className={`chat-message ${msg.sender}`}
-                >
-                  {msg.text}
-                </div>
-              ))}
-            </div>
-            <form className="chatbot-input-area" onSubmit={sendMessage}>
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your message..."
-              />
-              <button type="submit">Send</button>
-            </form>
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
 
 export default Tasks;

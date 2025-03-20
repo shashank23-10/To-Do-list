@@ -8,10 +8,10 @@ from app.auth.auth_handler import (
 )
 from app.database import user_collection
 
-# ✅ Ensure Router Uses "/auth"
-router = APIRouter(prefix="/auth", tags=["Auth"])  # 🔥 Prefix `/auth` is required
+# Ensure Router Uses "/auth"
+router = APIRouter(prefix="/auth", tags=["Auth"])  
 
-# ✅ Define User Schema
+# Define User Schema
 class UserCreate(BaseModel):
     name: str
     email: str  # Just a string now
@@ -22,7 +22,7 @@ class UserLogin(BaseModel):
     username: str
     password: str
 
-# ✅ Register New User
+# Register New User
 @router.post("/signup", summary="Register a new user")
 async def register_user(user: UserCreate):
     existing_user = await user_collection.find_one({"username": user.username.lower()})
@@ -40,7 +40,7 @@ async def register_user(user: UserCreate):
     await user_collection.insert_one(new_user)
     return {"message": "User created successfully"}
 
-# ✅ Login User & Generate JWT Token
+# Login User & Generate JWT Token
 @router.post("/login", summary="Login user and get JWT token")
 async def login_user(user: UserLogin):
     db_user = await user_collection.find_one({"username": user.username.lower()})
@@ -51,7 +51,7 @@ async def login_user(user: UserLogin):
     token = create_access_token({"sub": db_user["username"]})
     return {"access_token": token, "token_type": "bearer"}
 
-# ✅ Delete User Account
+# Delete User Account
 @router.delete("/delete", summary="Delete user account")
 async def delete_account(current_user: dict = Depends(get_current_user)):
     deletion_result = await user_collection.delete_one({"username": current_user["username"]})
@@ -59,7 +59,7 @@ async def delete_account(current_user: dict = Depends(get_current_user)):
         raise HTTPException(status_code=404, detail="User not found")
     return {"message": "User account deleted successfully"}
 
-# ✅ Get All Users (Sensitive: Consider Admin-Only Access)
+# Get All Users
 @router.get("/all", summary="Get all users")
 async def get_all_users():
     users_cursor = user_collection.find({})

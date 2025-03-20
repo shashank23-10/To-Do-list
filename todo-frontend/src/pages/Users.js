@@ -26,11 +26,9 @@ const navigate = useNavigate(); // Initialize useNavigate
 
 const handleLogin = async () => {
 try {
-    // If admin, simulate admin login and optionally set a token or use a special endpoint
+    // Hardcoded username and password 
     if (username === "shashank" && password === "admin") {
     localStorage.setItem("role", "admin");
-    // Optionally, set a dummy token if needed by your fetchUsers endpoint:
-    // localStorage.setItem("token", "DUMMY_ADMIN_TOKEN");
     alert("Admin login successful!");
     setIsAdmin(true);
     setLoggedIn(true);
@@ -62,7 +60,7 @@ const fetchUsers = async () => {
 try {
     const token = localStorage.getItem("token");
     // Adjust the URL if needed so that it returns all users
-    const response = await axios.get("http:/https://to-do-list-0f6z.onrender.com/auth/auth/all", {
+    const response = await axios.get("http://127.0.0.1:8000/auth/auth/all", {
     headers: { Authorization: `Bearer ${token}` },
     });
     console.log("Fetched users:", response.data);
