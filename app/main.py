@@ -28,6 +28,4 @@ app.add_middleware(
 app.include_router(task_router, prefix="/tasks", tags=["Tasks"])
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(conversation_router, prefix="/ws", tags=["Conversations"]) 
-
-# Note the updated prefix that now matches the frontend endpoint:
 app.include_router(ai_router, prefix="/api/todo-ai", tags=["ToDo-AI"])

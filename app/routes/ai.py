@@ -1,11 +1,12 @@
 import os
 from typing import List, Dict
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 from pydantic import BaseModel
-from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime
 from dotenv import load_dotenv
-from app.database import ai_collection
+from app.database import conversation_collection, todo_collection
+from app.auth.auth_bearer import JWTBearer
+from app.auth.auth_handler import decode_access_token
 
 load_dotenv("app/.env")
 
@@ -13,19 +14,10 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 if not GROQ_API_KEY:
     raise ValueError("API key for Groq is missing in the .env file.")
 
-MONGO_URI = os.getenv("MONGO_URI")
-if not MONGO_URI:
-    raise ValueError("MONGO_URI not set in .env")
-
-mongo_client = AsyncIOMotorClient(MONGO_URI)
-db = mongo_client["ai_collection"]  
-conversation_collection = db["conversations"]
-
-router = APIRouter()
-
-
 from groq import Client
 client = Client(api_key=GROQ_API_KEY)
+
+router = APIRouter()
 
 class UserInput(BaseModel):
     message: str
@@ -37,7 +29,7 @@ async def get_or_create_conversation(conversation_id: str) -> List[Dict[str, str
     if conversation_doc:
         return conversation_doc.get("messages", [])
     else:
-        new_conversation = [{"role": "system", "content": "You are a useful AI assistant."}]
+        new_conversation = [{"role": "system", "content": "Welcome to new chat. How may I help you?"}]
         await conversation_collection.insert_one({
             "_id": conversation_id,
             "messages": new_conversation,
@@ -67,40 +59,59 @@ def query_groq_api(messages: List[Dict[str, str]]) -> str:
             stream=True,
             stop=None,
         )
-        
         response = ""
         for chunk in completion:
             response += chunk.choices[0].delta.content or ""
-        
-        # Debug: log received response
         print("Received response from Groq API:", response)
         return response
-    
     except Exception as e:
         print(f"Error with Groq API: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error with Groq API: {str(e)}")
 
-@router.get("/chats")
-async def get_chat_history(conversation_id: str = Query(..., description="The ID of the conversation")):
-    conversation_doc = await conversation_collection.find_one({"_id": conversation_id})
-    if not conversation_doc:
-        raise HTTPException(status_code=404, detail="No chat history found.")
-    return {
-        "conversation_id": conversation_id,
-        "messages": conversation_doc.get("messages", [])
-    }
+def format_tasks(tasks: List[Dict]) -> str:
+    if not tasks:
+        return "You have no tasks at the moment."
+    task_lines = []
+    for task in tasks:
+        title = task.get("title", "Untitled Task")
+        due_date = task.get("dueDate")
+        if due_date:
+            task_lines.append(f"- {title} (Due: {due_date})")
+        else:
+            task_lines.append(f"- {title}")
+    return "Here are your current tasks:\n" + "\n".join(task_lines)
 
-@router.post("/")
-async def chat(input: UserInput):
+@router.get("/chats", dependencies=[Depends(JWTBearer())])
+async def get_chat_history(conversation_id: str = Query(..., description="The ID of the conversation")):
+    messages = await get_or_create_conversation(conversation_id)
+    return {"conversation_id": conversation_id, "messages": messages}
+
+@router.post("/", dependencies=[Depends(JWTBearer())])
+async def chat(input: UserInput, token: str = Depends(JWTBearer())):
+    # Decode the JWT token to get the username.
+    user_data = decode_access_token(token)
+    username = user_data.get("sub")
+    
+    # Retrieve the conversation history.
     messages = await get_or_create_conversation(input.conversation_id)
+    
+    # Append the user's new message.
     messages.append({"role": input.role, "content": input.message})
     
+    # If the user's message asks about tasks, fetch tasks and insert a system message.
+    if any(keyword in input.message.lower() for keyword in ["task", "tasks", "todo", "todos", "work", "assignment", "job", "duty", 
+                                                            "project", "responsibility", "deliverable"]):
+        tasks_cursor = todo_collection.find({"username": username})
+        tasks = await tasks_cursor.to_list(length=None)
+        tasks_info = format_tasks(tasks)
+        # Append a system message with the tasks information.
+        messages.append({"role": "system", "content": tasks_info})
+    
+    # Query the Groq API with the updated conversation context.
     response = query_groq_api(messages)
     
+    # Append the assistant's response to the conversation.
     messages.append({"role": "assistant", "content": response})
     await update_conversation_in_db(input.conversation_id, messages)
     
-    return {
-        "response": response,
-        "conversation_id": input.conversation_id
-    }
+    return {"response": response, "conversation_id": input.conversation_id}
