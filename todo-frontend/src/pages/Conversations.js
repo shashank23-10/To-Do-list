@@ -430,7 +430,8 @@ const Conversations = () => {
               // Human chat panel using WebSocket
               <>
                 <div className="chat-header">
-                  <h3>{toTitleCase(selectedReceiver)}</h3>
+                    <span className="selected-receiver-avatar">{toTitleCase(selectedReceiver).charAt(0)}</span>
+                    <span className="selected-receiver-heading">{toTitleCase(selectedReceiver)}</span>
                 </div>
                 <div className="chat-window" ref={chatWindowRef}>
                   {chat.map((msg, index) => {
@@ -464,7 +465,6 @@ const Conversations = () => {
                     );
                   })}
                 </div>
-                {/* Emoji Picker appears on top */}
                 {showEmojiPicker && (
                   <div className="emoji-picker">
                     {emojis.map((emoji, index) => (

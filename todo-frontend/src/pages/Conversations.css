@@ -3,55 +3,56 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Trebuchet, Tahoma, Arial, sans-serif;
 }
     
 .chat-page {
     display: flex;
     height: 90vh;
-    background: #ece5dd;
+    background: #BBDEFB;
 }
     
 /* Sidebar (Contacts List) */
 .chat-sidebar {
-    width: 25%;
-    background: #f0f0f0;
-    border-right: 5px solid #ddd;
+    width: 30%;
+    background: #005bb5;
+    border-right: 1px solid #2196F3;
     overflow-y: auto;
 }
     
 .chat-sidebar h3 {
-    background: #ededed;
+    background: #005bb5;
     padding: 15px;
     margin: 0;
-    border-bottom: 5px solid #ddd;
+    font-size: 30px;
+    font-weight: 1000;
+    color: #c0d0fa;
 }
-    
-.contacts-list {
-    list-style: none;
+
+.contact-list{
     margin: 0;
-    padding: 0;
 }
     
 .contact-item {
+    margin:0; 
     display: flex;
     align-items: center;
-    padding: 10px 15px;
     cursor: pointer;
-    border-bottom: 1px solid #ddd;
     transition: background 0.3s;
+    background-color: #005bb5;
+    color: #c0d0fa;
 }
 
 .contact-item:hover,
 .contact-item.active {
-    background: #ddd;
+    background: #1976d22d;
 }
     
 .contact-avatar {
     width: 40px;
     height: 40px;
-    background: #4a90e2;
-    color: #fff;
+    background: #BBDEFB;
+    color: #000;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -61,7 +62,9 @@ body {
 }
     
 .contact-name {
+    color: #c0d0fa;
     font-size: 16px;
+    font-weight: 800;
 }
 
 /* Chat Container */
@@ -69,28 +72,51 @@ body {
     width: 75%;
     display: flex;
     flex-direction: column;
-    background: #fff;
+    background: #E3F2FD;
     position: relative;
 }
     
 /* Chat Header */
 .chat-header {
-    padding: 15px;
-    background: #ededed;
-    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
+    background: #ece5dd;
+    display: flex;
+    align-items: center; /* Ensure all elements in the header are vertically centered */
 }
 
-.chat-header h3 {
-    margin: 0;
-    font-size: 18px;
+/* Receiver Avatar */
+.selected-receiver-avatar {
+    display: flex; /* Enables centering */
+    align-items: center; /* Vertically centers text */
+    justify-content: center; /* Horizontally centers text */
+    width: 40px; 
+    height: 40px; 
+    background: #4a90e2;
+    color: #fff;
+    border-radius: 50%;
+    font-weight: bold;
+    text-align: center;
+    font-size: 25px; /* Adjust text size */
 }
+
+/* Receiver Heading */
+.chat-header .selected-receiver-heading {
+    font-size: 30px;
+    font-weight: 600;
+    color: #4d4131;
+    padding-left: 10px; /* Keep space between avatar and heading */
+    margin: 0; /* Remove extra margins */
+    display: flex;
+    align-items: center; /* Align text properly */
+}
+
 
 /* Chat Window */
 .chat-window {
     flex: 1;
     padding: 15px;
     overflow-y: auto;
-    background: white;
+    background: #ece5dd;
     display: flex;
     flex-direction: column;
 }
@@ -110,18 +136,25 @@ body {
     background: #005bb5;
     color: #fff;
     align-self: flex-end;
-    border-bottom-right-radius: 0;
+    border: 1px solid #ddd;
     text-align: right;
+    flex-direction: row-reverse;
 }
-    
+.chat-message.sent .message-dp{
+    margin-left: 10px;
+}
 .chat-message.received {
-    background: #fff;
+    background: #ffffff;
     align-self: flex-start;
     border: 1px solid #ddd;
     border-bottom-left-radius: 0;
     text-align: left;
+    color: #263238;
+    box-shadow: 6px 6px 6px 6px #cac3b1;
 }
-
+.chat-message.received .message-dp{
+    margin-right:  10px;
+}
 /* New: Message DP inside chat bubble */
 .chat-message .message-dp {
     display: inline-block;
@@ -134,7 +167,6 @@ body {
     font-weight: bold;
     text-align: center;
     line-height: 30px;
-    margin-right: 8px;
     flex-shrink: 0;
 }
 
@@ -149,7 +181,7 @@ body {
     display: flex;
     align-items: center;
     padding: 10px 15px;
-    background: #f0f0f0;
+    background: #ece5dd;
     border-top: 1px solid #ddd;
 }
 
@@ -186,46 +218,3 @@ body {
     color: #888;
 }
 
-/* Header Styles (unchanged) */
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #ededed;
-    padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
-}
-
-.logo {
-    height: 40px;
-}
-
-.profile-menu {
-    position: relative;
-}
-
-.profile-button {
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.profile-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    z-index: 1000;
-}
-
-.dropdown-item {
-    padding: 10px 15px;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.dropdown-item:hover {
-    background: #f0f0f0;
-}
