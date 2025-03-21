@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Trebuchet, Tahoma, Arial, sans-serif;
+    overscroll-behavior: none;
 }
     
 .chat-page {
@@ -81,7 +82,8 @@ body {
     padding: 10px 20px;
     background: #ece5dd;
     display: flex;
-    align-items: center; /* Ensure all elements in the header are vertically centered */
+    align-items: center;
+    border: 2px solid beige;
 }
 
 /* Receiver Avatar */
@@ -123,7 +125,7 @@ body {
     
 /* Chat Messages */
 .chat-message {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     padding: 10px 15px;
     border-radius: 20px;
     max-width: 60%;
@@ -139,6 +141,9 @@ body {
     border: 1px solid #ddd;
     text-align: right;
     flex-direction: row-reverse;
+    border-bottom-right-radius: 0;
+    box-shadow: 8px 4px 2px 4px #cac3b1;
+    margin-right: 10px;
 }
 .chat-message.sent .message-dp{
     margin-left: 10px;
@@ -150,7 +155,8 @@ body {
     border-bottom-left-radius: 0;
     text-align: left;
     color: #263238;
-    box-shadow: 6px 6px 6px 6px #cac3b1;
+    box-shadow: -6px 4px 1px 4px #cac3b1;
+    margin-left: 10px;
 }
 .chat-message.received .message-dp{
     margin-right:  10px;
@@ -182,7 +188,7 @@ body {
     align-items: center;
     padding: 10px 15px;
     background: #ece5dd;
-    border-top: 1px solid #ddd;
+    border-top: 2px solid beige;
 }
 
 .chat-input-area input {
