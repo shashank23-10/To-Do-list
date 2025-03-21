@@ -319,9 +319,6 @@ const Conversations = () => {
               <button className="dropdown-item" onClick={() => (window.location.href = "/tasks")}>
                 Tasks
               </button>
-              <button className="dropdown-item" onClick={() => (window.location.href = "/todoai")}>
-                Llama-Ai
-              </button>
               <button className="dropdown-item" onClick={handleLogout}>
                 Logout
               </button>
@@ -384,8 +381,11 @@ const Conversations = () => {
             selectedReceiver.toLowerCase() === "llama-ai" ? (
               // Llama-Ai (AI) chat panel
               <>
-                <div className="chat-header">
-                  <h3>{toTitleCase(selectedReceiver)}</h3>
+                <div className="chat-header-llama">
+                  <span className="selected-receiver-avatar">
+                    {toTitleCase(selectedReceiver).charAt(0)}
+                  </span>
+                  <span className="selected-receiver-heading-llama">{toTitleCase(selectedReceiver)}</span>
                 </div>
                 <div className="chat-window" ref={chatWindowRef}>
                   {aiChatHistory.map((msg, index) => (

@@ -1,4 +1,6 @@
-/* Global Reset and Base Styles */
+/* ==========================================================================
+Global Reset and Base Styles
+========================================================================== */
 * {
 margin: 0;
 padding: 0;
@@ -13,8 +15,8 @@ background-color: #1c2b41;
 }
 
 /* ==========================================================================
-Header
-========================================================================== */
+    Header
+    ========================================================================== */
 .header {
 display: flex;
 justify-content: space-between;
@@ -84,8 +86,8 @@ background: #ff4b5c;
 }
 
 /* ==========================================================================
-Main Content Layout
-========================================================================== */
+    Main Content Layout
+    ========================================================================== */
 .main-content {
 display: flex;
 flex-direction: column;
@@ -115,8 +117,8 @@ flex: 1;
 }
 
 /* --------------------------------------------------------------------------
-Task Controls Container 
--------------------------------------------------------------------------- */
+    Task Controls Container 
+    -------------------------------------------------------------------------- */
 .add-task-box,
 .list-tasks-box {
 background: #004065;
@@ -135,13 +137,13 @@ transform: scale(1.02);
 text-align: center;
 }
 
-.add-task-title{
-    color: #005bb5;
+.add-task-title {
+color: #005bb5;
 }
 
 /* ==========================================================================
-Pinned Tasks Container
-========================================================================== */
+    Pinned Tasks Container
+    ========================================================================== */
 .pinned-Tasks {
 background: #004065;
 padding: 20px;
@@ -149,11 +151,10 @@ border-radius: 12px;
 font-weight: 800;
 }
 
-.pinned-Tasks h2{
-    color: #005bb5;
-    text-align: center;
+.pinned-Tasks h2 {
+color: #005bb5;
+text-align: center;
 }
-
 
 .pinned-tasks {
 list-style: none;
@@ -172,8 +173,8 @@ margin-bottom: 10px;
 }
 
 /* ==========================================================================
-Form Inputs and Buttons
-========================================================================== */
+    Form Inputs and Buttons
+    ========================================================================== */
 .tasks-input {
 width: 100%;
 padding: 10px;
@@ -210,8 +211,8 @@ background: #357ABD;
 }
 
 /* ==========================================================================
-Search and Filter Section
-========================================================================== */
+    Search and Filter Section
+    ========================================================================== */
 .search-filter {
 display: flex;
 gap: 15px;
@@ -235,8 +236,8 @@ border-color: #4a90e2;
 }
 
 /* ==========================================================================
-View Toggle
-========================================================================== */
+    View Toggle
+    ========================================================================== */
 .view-toggle {
 display: flex;
 justify-content: center;
@@ -261,8 +262,8 @@ color: #fff;
 }
 
 /* ==========================================================================
-Tasks List Styling
-========================================================================== */
+    Tasks List Styling
+    ========================================================================== */
 .tasks-list {
 list-style: none;
 padding: 0;
@@ -288,16 +289,17 @@ color: #1c2b41;
 }
 
 .tasks-item-title {
-    font-weight: bold;
+font-weight: bold;
 }
+
 /* ==========================================================================
-Task Display and Actions
-========================================================================== */
+    Task Display and Actions
+    ========================================================================== */
 .task-display {
 display: flex;
-gap: 45px;
+flex-direction: column;
+gap: 5px;
 align-items: center;
-
 }
 
 .task-actions {
@@ -345,36 +347,36 @@ transition: transform 0.2s ease;
 transform: scale(1.2);
 }
 
-.priority{
-    min-width: 80px;
-    max-width: 80px;
-    padding: 2.5px 10px;
-    border-radius: 20px;
-    text-align: center;
-    color: white;
+.priority {
+min-width: 80px;
+max-width: 80px;
+padding: 2.5px 10px;
+border-radius: 20px;
+text-align: center;
+color: white;
 }
 
-.task-display .priority{
-    min-width: 80px;
-    max-width: 80px;
-    padding: 2.5px 10px;
-    border-radius: 20px;
-    text-align: center;
-    color: white;
+.task-display .priority {
+min-width: 80px;
+max-width: 80px;
+padding: 2.5px 10px;
+border-radius: 20px;
+text-align: center;
+color: white;
 }
 
-.board-container .priority{
-    min-width: 80px;
-    max-width: 80px;
-    padding: 2.5px 10px;
-    border-radius: 20px;
-    text-align: center;
-    color: white;
+.board-container .priority {
+min-width: 80px;
+max-width: 80px;
+padding: 2.5px 10px;
+border-radius: 20px;
+text-align: center;
+color: white;
 }
 
 /* ==========================================================================
-Gallery View Styling
-========================================================================== */
+    Gallery View Styling
+    ========================================================================== */
 .tasks-gallery {
 display: grid;
 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -406,8 +408,8 @@ color: #666;
 }
 
 /* ==========================================================================
-Board (Trello-like) View Styling
-========================================================================== */
+    Board (Trello-like) View Styling
+    ========================================================================== */
 .board-container {
 display: flex;
 gap: 20px;
@@ -472,8 +474,8 @@ color: #666;
 }
 
 /* ==========================================================================
-Calendar View Styling
-========================================================================== */
+    Calendar View Styling
+    ========================================================================== */
 .calendar-view {
 background: #fff;
 padding: 20px;
@@ -577,8 +579,8 @@ border: none;
 }
 
 /* ==========================================================================
-Tablet View Styling
-========================================================================== */
+    Tablet View Styling
+    ========================================================================== */
 .tablet-container {
 display: flex;
 flex-wrap: wrap;
@@ -586,6 +588,7 @@ gap: 1rem;
 padding: 1rem;
 background: linear-gradient(to right, #4a90e2, rgb(0,82,156));
 }
+
 .tablet-column {
 flex: 1 1 calc(33.333% - 1rem);
 background-color: #fff;
@@ -605,6 +608,7 @@ color: #333;
 border-bottom: 1px solid #ddd;
 padding-bottom: 0.5rem;
 }
+
 .tablet-tasks {
 display: flex;
 flex-direction: column;
@@ -630,16 +634,16 @@ text-decoration: line-through;
 }
 
 /* ==========================================================================
-Completed Tasks
-========================================================================== */
+    Completed Tasks
+    ========================================================================== */
 .completed {
 text-decoration: line-through;
 color: grey;
 }
 
 /* ==========================================================================
-Delete Account Section
-========================================================================== */
+    Delete Account Section
+    ========================================================================== */
 .delete-account-container {
 display: flex;
 justify-content: center;
@@ -664,8 +668,8 @@ background: #cc3947;
 }
 
 /* ==========================================================================
-Animations and Transitions
-========================================================================== */
+    Animations and Transitions
+    ========================================================================== */
 @keyframes fadeIn {
 from { opacity: 0; }
 to { opacity: 1; }
@@ -676,11 +680,21 @@ animation: fadeIn 0.5s ease-in-out;
 }
 
 /* ==========================================================================
-Utilities and Helpers
-========================================================================== */
-.flex-center { display: flex; justify-content: center; align-items: center; }
-.flex-column { display: flex; flex-direction: column; }
-.flex-row { display: flex; flex-direction: row; }
+    Utilities and Helpers
+    ========================================================================== */
+.flex-center { 
+display: flex; 
+justify-content: center; 
+align-items: center; 
+}
+.flex-column { 
+display: flex; 
+flex-direction: column; 
+}
+.flex-row { 
+display: flex; 
+flex-direction: row; 
+}
 .w-100 { width: 100%; }
 .h-100 { height: 100%; }
 .mt-5 { margin-top: 5px; }
@@ -709,8 +723,8 @@ Utilities and Helpers
 .transition-all { transition: all 0.3s ease; }
 
 /* ==========================================================================
-Advanced Button Styles
-========================================================================== */
+    Advanced Button Styles
+    ========================================================================== */
 .btn {
 display: inline-block;
 padding: 10px 20px;
@@ -738,8 +752,8 @@ background: #cc3947;
 }
 
 /* ==========================================================================
-Card Components
-========================================================================== */
+    Card Components
+    ========================================================================== */
 .card {
 background: #fff;
 border-radius: 10px;
@@ -752,8 +766,8 @@ transform: translateY(-5px);
 }
 
 /* ==========================================================================
-Modal Components (For Future Use)
-========================================================================== */
+    Modal Components (For Future Use)
+    ========================================================================== */
 .modal {
 position: fixed;
 top: 0;
@@ -776,8 +790,8 @@ animation: fadeIn 0.5s ease;
 }
 
 /* ==========================================================================
-Tooltip Styles
-========================================================================== */
+    Tooltip Styles
+    ========================================================================== */
 .tooltip {
 position: relative;
 display: inline-block;
@@ -805,8 +819,8 @@ opacity: 1;
 }
 
 /* ==========================================================================
-Breadcrumb Navigation
-========================================================================== */
+    Breadcrumb Navigation
+    ========================================================================== */
 .breadcrumb {
 margin: 20px 0;
 padding: 10px 20px;
@@ -822,8 +836,8 @@ text-decoration: underline;
 }
 
 /* ==========================================================================
-Footer
-========================================================================== */
+    Footer
+    ========================================================================== */
 .footer {
 text-align: center;
 padding: 20px;
@@ -842,8 +856,8 @@ text-decoration: underline;
 }
 
 /* ==========================================================================
-Additional Theme and Typography Utilities
-========================================================================== */
+    Additional Theme and Typography Utilities
+    ========================================================================== */
 .section-header {
 font-size: 20px;
 font-weight: bold;
@@ -870,8 +884,8 @@ color: #357ABD;
 }
 
 /* ==========================================================================
-Extra Decorative Borders, Shadows, and Spacing
-========================================================================== */
+    Extra Decorative Borders, Shadows, and Spacing
+    ========================================================================== */
 .border-primary { border: 2px solid #4a90e2; }
 .border-secondary { border: 2px dashed #ccc; }
 .spacer { height: 20px; }
@@ -880,34 +894,128 @@ Extra Decorative Borders, Shadows, and Spacing
 .mb-25 { margin-bottom: 25px; }
 
 /* ==========================================================================
-Responsive Media Queries
-========================================================================== */
+    Responsive Media Queries
+    ========================================================================== */
 
-/* Stack columns in a single column for smaller screens */
+/* -- 1) Very Small Screens (e.g. <= 576px) -- */
+@media (max-width: 576px) {
+.header {
+    padding: 10px 20px;
+}
+.logo {
+    max-height: 40px;
+}
+.main-content {
+    padding: 20px;
+}
+.task-layout {
+    flex-direction: column;
+    gap: 10px;
+}
+.left-panel, .right-panel {
+    flex: 1 1 100%;
+    max-width: 100%;
+}
+.add-task-box, .list-tasks-box {
+    padding: 20px;
+}
+.tablet-container {
+    display: block;
+    padding: 1rem 0;
+    background: none; /* optional: remove the gradient if you want simpler style */
+}
+.tablet-column {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.board-container {
+    flex-direction: column;
+    align-items: stretch;
+}
+.board-column {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.calendar-view {
+    margin: 10px;
+    padding: 10px;
+}
+.calendar-header h2 {
+    font-size: 18px;
+}
+.tablet-column h2 {
+    font-size: 1rem;
+}
+.calendar-day {
+    min-height: 80px;
+}
+}
+
+/* -- 2) Tablet Screens (<= 768px) -- */
 @media (max-width: 768px) {
 .task-layout {
-flex-direction: column;
+    flex-direction: column;
 }
 
 .left-panel, .right-panel {
-flex: 1 1 100%;
-max-width: 100%;
+    flex: 1 1 100%;
+    max-width: 100%;
 }
 
-/* If you want less padding on small screens, you can reduce here */
 .add-task-box,
 .list-tasks-box {
-padding: 20px;
+    padding: 20px;
 }
 
 .tablet-container {
-display: block;
-padding: 1rem 0;
-background: none; /* optional: remove the gradient if you want simpler style */
+    display: block;
+    padding: 1rem 0;
+    background: none; /* optional: remove the gradient if you want simpler style */
 }
 
 .tablet-column {
     width: 100%;
     margin-bottom: 1rem;
+}
+}
+
+/* -- 3) Medium-Large Screens (<= 992px) -- */
+@media (max-width: 992px) {
+.header {
+    padding: 10px 20px;
+}
+.main-content {
+    padding: 20px;
+}
+.task-layout {
+    gap: 15px;
+}
+.tablet-container {
+    gap: 0.5rem;
+}
+.tablet-column {
+    flex: 1 1 calc(50% - 0.5rem);
+}
+.board-column {
+    width: 240px;
+}
+}
+
+/* -- 4) Desktop Screens (<= 1200px) -- */
+@media (max-width: 1200px) {
+.header {
+    padding: 10px 30px;
+}
+.task-layout {
+    gap: 20px;
+}
+.board-container {
+    padding: 15px;
+}
+.board-column {
+    width: 260px;
+}
+.tablet-column {
+    flex: 1 1 calc(33.333% - 1rem);
 }
 }

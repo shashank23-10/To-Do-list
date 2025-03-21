@@ -413,9 +413,6 @@ function toTitleCase(str) {
               <button className="dropdown-item" onClick={() => window.location.href = '/conversations'}>
                 Conversations
               </button>
-              <button className="dropdown-item" onClick={() => window.location.href = '/todoai'}>
-                Llama-Ai
-              </button>
               <button className="dropdown-item" onClick={handleLogout}>
                 Logout
               </button>

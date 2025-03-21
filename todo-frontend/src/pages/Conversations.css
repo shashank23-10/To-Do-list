@@ -101,6 +101,23 @@ body {
     align-items: center;
 }
 
+.chat-header-llama {
+    padding: 10px 20px;
+    background: #1c2b41;
+    display: flex;
+    align-items: center;
+}
+
+.selected-receiver-heading-llama{
+    font-size: 30px;
+    font-weight: 800;
+    color: #c0d0fa;
+    padding-left: 10px; 
+    margin: 0;
+    display: flex;
+    align-items: center; 
+}
+
 /* Receiver Avatar */
 .selected-receiver-avatar {
     display: flex;
@@ -154,7 +171,6 @@ body {
     background: #005bb5;
     color: #fff;
     align-self: flex-end;
-    border: 1px solid #ddd;
     text-align: right;
     flex-direction: row-reverse;
     border-bottom-right-radius: 0;
