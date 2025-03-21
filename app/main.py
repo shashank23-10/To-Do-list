@@ -4,6 +4,7 @@ from app.routes.tasks import router as task_router
 from app.routes.auth_routes import router as auth_router
 from app.routes.conversations import router as conversation_router  
 from app.routes.ai import router as ai_router
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -23,6 +24,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 # Include routers with the proper prefixes.
 app.include_router(task_router, prefix="/tasks", tags=["Tasks"])

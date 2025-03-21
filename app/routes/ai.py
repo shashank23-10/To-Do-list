@@ -1,6 +1,6 @@
 import os
 from typing import List, Dict
-from fastapi import APIRouter, HTTPException, Query, Depends
+from fastapi import APIRouter, HTTPException, Query, Depends, Request
 from pydantic import BaseModel
 from datetime import datetime
 from dotenv import load_dotenv
@@ -75,10 +75,11 @@ def format_tasks(tasks: List[Dict]) -> str:
     for task in tasks:
         title = task.get("title", "Untitled Task")
         due_date = task.get("dueDate")
+        priority = task.get("priority", "N/A")
         if due_date:
-            task_lines.append(f"- {title} (Due: {due_date})")
+            task_lines.append(f"- {title} (Due: {due_date}, Priority: {priority})")
         else:
-            task_lines.append(f"- {title}")
+            task_lines.append(f"- {title} (Priority: {priority})")
     return "Here are your current tasks:\n" + "\n".join(task_lines)
 
 @router.get("/chats", dependencies=[Depends(JWTBearer())])
@@ -98,10 +99,20 @@ async def chat(input: UserInput, token: str = Depends(JWTBearer())):
     # Append the user's new message.
     messages.append({"role": input.role, "content": input.message})
     
-    # If the user's message asks about tasks, fetch tasks and insert a system message.
+    # Check if the user's message asks about tasks.
+    # Also detect if the query includes priority information.
     if any(keyword in input.message.lower() for keyword in ["task", "tasks", "todo", "todos", "work", "assignment", "job", "duty", 
                                                             "project", "responsibility", "deliverable"]):
-        tasks_cursor = todo_collection.find({"username": username})
+        query = {"username": username}
+        lower_message = input.message.lower()
+        if "low priority" in lower_message:
+            query["priority"] = "low"
+        elif "high priority" in lower_message:
+            query["priority"] = "high"
+        elif "medium priority" in lower_message:
+            query["priority"] = "medium"
+        
+        tasks_cursor = todo_collection.find(query)
         tasks = await tasks_cursor.to_list(length=None)
         tasks_info = format_tasks(tasks)
         # Append a system message with the tasks information.

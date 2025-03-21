@@ -1,4 +1,4 @@
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect,  File, UploadFile
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect,  File, UploadFile, Request
 from typing import Dict, List, Tuple
 from datetime import datetime
 from app.crud import create_chat_message, get_chat_history
@@ -62,11 +62,13 @@ async def chat(websocket: WebSocket, sender: str, receiver: str):
 
 
 @router.post("/upload")
-async def upload_file(file: UploadFile = File(...)):
+async def upload_file(request: Request, file: UploadFile = File(...)):
     upload_folder = "uploads"
     os.makedirs(upload_folder, exist_ok=True)
     file_path = os.path.join(upload_folder, file.filename)
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     # For simplicity, we return the URL as a relative path.
-    return {"url": f"/uploads/{file.filename}"}
+    file_url = f"{request.base_url}uploads/{file.filename}"
+    print("Returning file URL:", file_url)
+    return {"url": file_url}

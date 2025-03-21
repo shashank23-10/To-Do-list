@@ -218,3 +218,22 @@ body {
     color: #888;
 }
 
+/* Container for the uploaded file card */
+.file-link {
+    padding: 8px;
+    background: #eef;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 4px 0;
+}
+
+.file-link a {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.file-link a:hover {
+    text-decoration: underline;
+}
+

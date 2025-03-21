@@ -45,13 +45,34 @@ function toTitleCase(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
+// Helper function: tries to extract a JSON object from the message.
+// It checks if the message starts with a prefix ending with ": " and then a JSON object.
+const parseMessage = (msg) => {
+  // Check for a prefix ending with ": " followed by a JSON object.
+  const regex = /.+:\s*(\{.*\})/;
+  const match = msg.match(regex);
+  if (match && match[1]) {
+    try {
+      return JSON.parse(match[1]);
+    } catch (err) {
+      console.error("Error parsing JSON from prefixed message:", err);
+      return null;
+    }
+  }
+  // Otherwise, try to parse the message directly.
+  try {
+    return JSON.parse(msg);
+  } catch (err) {
+    return null;
+  }
+};
+
 const Conversations = () => {
   const currentUser = getUsernameFromToken();
   if (!currentUser) {
     window.location.href = "/login";
   }
 
-  // State for profile dropdown, contacts, chat messages, emoji picker, etc.
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedReceiver, setSelectedReceiver] = useState(null);
@@ -72,18 +93,17 @@ const Conversations = () => {
     "🫡", "😤", "👁️", "🫂", "💪",
     "✨", "🎉", "🎊", "🔑", "🔐",
     "🔓", "🔒", "🪪", "💻", "🖥️",
-    "🖨️","🔋","🪫","⌨️","🖱️","🖲️",
-    "💽","💾","💿","📀","📡","💡",
-    "📔","📕","📖","📗","📘","📙",
-    "📚","📓","📒","📃","📜","📄","📑",
-    "📰","🗞️","🔖","🏷️","💰","🪙","💴",
-    "💵","💷","💶","💸","🧾","🏧","✉️",
-    "📧","📨","📩","📤","📥","📦","📫",
-    "📪","📬","📭","📮","🗳️","✏️","✒️",
-    "🖋️","💼","📁","📂","📅","📆","🗓️",
-    "📇","📈","📉","📊","📋","📌","⌛",
-    "⏳","🔛","🔝","🔜","☑️","🔚","🔙","💲",
-    
+    "🖨️", "🔋", "🪫", "⌨️", "🖱️", "🖲️",
+    "💽", "💾", "💿", "📀", "📡", "💡",
+    "📔", "📕", "📖", "📗", "📘", "📙",
+    "📚", "📓", "📒", "📃", "📜", "📄", "📑",
+    "📰", "🗞️", "🔖", "🏷️", "💰", "🪙", "💴",
+    "💵", "💷", "💶", "💸", "🧾", "🏧", "✉️",
+    "📧", "📨", "📩", "📤", "📥", "📦", "📫",
+    "📪", "📬", "📭", "📮", "🗳️", "✏️", "✒️",
+    "🖋️", "💼", "📁", "📂", "📅", "📆", "🗓️",
+    "📇", "📈", "📉", "📊", "📋", "📌", "⌛",
+    "⏳", "🔛", "🔝", "🔜", "☑️", "🔚", "🔙", "💲",
   ];
 
   // Fetch users from backend and append the special AI contact ("Llama-AI")
@@ -187,13 +207,8 @@ const Conversations = () => {
       const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:8000/api/todo-ai/",
-        {
-          message,
-          conversation_id: convId,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { message, conversation_id: convId },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       // Append AI's reply as a JSON string
       setAiChatHistory((prev) => [
@@ -217,14 +232,13 @@ const Conversations = () => {
     formData.append("file", file);
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post("http://localhost:8000/api/upload", formData, {
+      const response = await axios.post("http://localhost:8000/ws/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
       });
       const fileUrl = response.data.url;
-      // Create a file message in JSON format
       const fileMessage = JSON.stringify({
         type: "file",
         sender: currentUser,
@@ -261,35 +275,30 @@ const Conversations = () => {
     setShowEmojiPicker(false);
   };
 
-  // Render message content: if JSON with type "file", show a link (and preview if image/video)
+  // Render message content.
+  // If a message is a file, it is rendered inside a "file-card" container.
   const renderMessageContent = (msg) => {
-    try {
-      const parsed = JSON.parse(msg);
-      if (parsed.type && parsed.type === "file") {
-        return (
-          <div className="file-message">
-            <a href={parsed.url} target="_blank" rel="noopener noreferrer">
-              {parsed.filename}
-            </a>
-            {parsed.fileType.startsWith("image/") && (
-              <img src={parsed.url} alt={parsed.filename} className="chat-image" />
-            )}
-            {parsed.fileType.startsWith("video/") && (
-              <video controls className="chat-video">
-                <source src={parsed.url} type={parsed.fileType} />
-              </video>
-            )}
-          </div>
-        );
-      } else if (parsed.type && parsed.type === "text") {
-        return parsed.text;
-      } else {
-        return msg;
+    const parsed = parseMessage(msg);
+    if (parsed && parsed.type === "file") {
+      // Use the full URL if needed
+      let fileUrl = parsed.url;
+      if (fileUrl.startsWith("/")) {
+        fileUrl = `http://localhost:8000${fileUrl}`;
       }
-    } catch (e) {
+      return (
+        <div className="file-link">
+          <a href={fileUrl} target="_blank" rel="noopener noreferrer">
+            {parsed.filename}
+          </a>
+        </div>
+      );
+    } else if (parsed && parsed.type === "text") {
+      return parsed.text;
+    } else {
       return msg;
     }
   };
+  
 
   return (
     <Fragment>
@@ -361,25 +370,19 @@ const Conversations = () => {
                       key={index}
                       className={`chat-message ${
                         (() => {
-                          try {
-                            const parsed = JSON.parse(msg);
-                            return parsed.sender.toLowerCase() === currentUser.toLowerCase()
-                              ? "sent"
-                              : "received";
-                          } catch (e) {
-                            return msg.startsWith(currentUser) ? "sent" : "received";
-                          }
+                          const parsed = parseMessage(msg);
+                          return parsed && parsed.sender && parsed.sender.toLowerCase() === currentUser.toLowerCase()
+                            ? "sent"
+                            : "received";
                         })()
                       }`}
                     >
                       <div className="message-dp">
                         {(() => {
-                          try {
-                            const parsed = JSON.parse(msg);
-                            return toTitleCase(parsed.sender).charAt(0);
-                          } catch (e) {
-                            return toTitleCase(currentUser).charAt(0);
-                          }
+                          const parsed = parseMessage(msg);
+                          return parsed && parsed.sender
+                            ? toTitleCase(parsed.sender).charAt(0)
+                            : toTitleCase(currentUser).charAt(0);
                         })()}
                       </div>
                       <div className="message-text">{renderMessageContent(msg)}</div>
@@ -387,7 +390,6 @@ const Conversations = () => {
                   ))}
                   {loadingAi && <div className="chat-message received">AI is typing...</div>}
                 </div>
-                {/* Emoji Picker appears on top */}
                 {showEmojiPicker && (
                   <div className="emoji-picker">
                     {emojis.map((emoji, index) => (
@@ -404,12 +406,7 @@ const Conversations = () => {
                   <button onClick={toggleEmojiPicker}>
                     <FaSmile />
                   </button>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    style={{ display: "none" }}
-                    onChange={handleFileChange}
-                  />
+                  <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={handleFileChange} />
                   <input
                     type="text"
                     value={message}
@@ -430,21 +427,21 @@ const Conversations = () => {
               // Human chat panel using WebSocket
               <>
                 <div className="chat-header">
-                    <span className="selected-receiver-avatar">{toTitleCase(selectedReceiver).charAt(0)}</span>
-                    <span className="selected-receiver-heading">{toTitleCase(selectedReceiver)}</span>
+                  <span className="selected-receiver-avatar">
+                    {toTitleCase(selectedReceiver).charAt(0)}
+                  </span>
+                  <span className="selected-receiver-heading">{toTitleCase(selectedReceiver)}</span>
                 </div>
                 <div className="chat-window" ref={chatWindowRef}>
                   {chat.map((msg, index) => {
-                    let isFileMessage = false;
+                    let parsed = parseMessage(msg);
+                    let isFileMessage = parsed && parsed.type === "file";
                     let senderName = "";
                     let content = msg;
-                    try {
-                      const parsed = JSON.parse(msg);
-                      if (parsed.type === "file") {
-                        isFileMessage = true;
-                      }
+                    if (parsed) {
                       senderName = parsed.sender || "";
-                    } catch (e) {
+                      content = parsed.type === "text" ? parsed.text : msg;
+                    } else {
                       const colonIndex = msg.indexOf(": ");
                       if (colonIndex !== -1) {
                         senderName = msg.substring(0, colonIndex);
@@ -481,12 +478,7 @@ const Conversations = () => {
                   <button onClick={toggleEmojiPicker}>
                     <FaSmile />
                   </button>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    style={{ display: "none" }}
-                    onChange={handleFileChange}
-                  />
+                  <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={handleFileChange} />
                   <input
                     type="text"
                     value={message}
