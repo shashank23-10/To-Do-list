@@ -9,7 +9,7 @@ body {
 
 /*-----------------SCROLLBAR UPDATE-----------------*/
 ::-webkit-scrollbar {
-    width: 4px; 
+    width: 2px; 
 }
 ::-webkit-scrollbar-track {
     background: #f1f1f1; 
@@ -34,13 +34,11 @@ body {
 /* Sidebar (Contacts List) */
 .chat-sidebar {
     width: 30%;
-    background: #005bb5;
-    border-right: 1px solid #2196F3;
+    background: #1c2b41;
     overflow-y: auto;
 }
 
 .chat-sidebar h3 {
-    background: #005bb5;
     padding: 15px;
     margin: 0;
     font-size: 30px;
@@ -58,7 +56,7 @@ body {
     align-items: center;
     cursor: pointer;
     transition: background 0.3s;
-    background-color: #005bb5;
+    background-color: #1c2b41;
     color: #c0d0fa;
 }
 
@@ -92,17 +90,15 @@ body {
     width: 75%;
     display: flex;
     flex-direction: column;
-    background: #E3F2FD;
     position: relative;
 }
     
 /* Chat Header */
 .chat-header {
     padding: 10px 20px;
-    background: #ece5dd;
+    background: #1c2b41;
     display: flex;
     align-items: center;
-    border: 2px solid beige;
 }
 
 /* Receiver Avatar */
@@ -112,7 +108,6 @@ body {
     justify-content: center; 
     width: 40px; 
     height: 40px; 
-    border: 4px solid #263238;
     font-size: 10px;
     background: #4a90e2;
     color: #fff;
@@ -125,8 +120,8 @@ body {
 /* Receiver Heading */
 .chat-header .selected-receiver-heading {
     font-size: 30px;
-    font-weight: 600;
-    color: #4d4131;
+    font-weight: 800;
+    color: #c0d0fa;
     padding-left: 10px; 
     margin: 0;
     display: flex;
@@ -139,7 +134,7 @@ body {
     flex: 1;
     padding: 15px;
     overflow-y: auto;
-    background: #ece5dd87;
+    background: #004065f1;
     display: flex;
     flex-direction: column;
 }
@@ -214,8 +209,7 @@ body {
     display: flex;
     align-items: center;
     padding: 10px 15px;
-    background: #ece5dd;
-    border-top: 2px solid beige;
+    background: #1c2b41;
 }
 
 .chat-input-area input {

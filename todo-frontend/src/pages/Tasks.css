@@ -7,10 +7,9 @@ box-sizing: border-box;
 
 body {
 font-family: 'Arial', sans-serif;
-background-color: #f5f7fa;
 color: #333;
 line-height: 1.6;
-background-image: linear-gradient(120deg, #f6f9fc 0%, #e9eff5 100%);
+background-color: #1c2b41;
 }
 
 /* ==========================================================================
@@ -20,7 +19,7 @@ Header
 display: flex;
 justify-content: space-between;
 align-items: center;
-background: #fff;
+background: #1d2125;
 padding: 10px 40px;
 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 position: sticky;
@@ -93,7 +92,7 @@ flex-direction: column;
 align-items: center;
 padding: 40px;
 gap: 30px;
-background-color: #005bb5;
+background-color: #1c2b41;
 }
 
 /* Two-column layout for tasks */
@@ -116,11 +115,11 @@ flex: 1;
 }
 
 /* --------------------------------------------------------------------------
-Task Controls Container (now used in left-panel)
+Task Controls Container 
 -------------------------------------------------------------------------- */
 .add-task-box,
 .list-tasks-box {
-background: #ece5dd;
+background: #004065;
 padding: 30px;
 border-radius: 12px;
 box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
@@ -144,10 +143,10 @@ text-align: center;
 Pinned Tasks Container
 ========================================================================== */
 .pinned-Tasks {
-background: #ece5dd;
-border: 2px solid #4a90e2;
+background: #004065;
 padding: 20px;
 border-radius: 12px;
+font-weight: 800;
 }
 
 .pinned-Tasks h2{
@@ -165,9 +164,9 @@ margin-top: 10px;
 .pinned-task {
 display: flex;
 align-items: center;
-background: #fff;
+background: #1c2b41;
+color: #ece5dd;
 padding: 10px;
-border: 1px solid #ddd;
 border-radius: 8px;
 margin-bottom: 10px;
 }
@@ -183,6 +182,8 @@ border: 2px solid #ccc;
 border-radius: 6px;
 font-size: 16px;
 transition: border 0.3s ease;
+background: #22272b;
+color: #6b6c6c;
 }
 
 .tasks-input:focus {
@@ -221,9 +222,11 @@ margin-bottom: 20px;
 .search-filter select {
 flex: 1;
 padding: 10px;
+background: #22272b;
 border: 2px solid #ccc;
 border-radius: 6px;
 transition: border 0.3s ease;
+color: #525c65;
 }
 
 .search-filter input:focus,
@@ -270,31 +273,31 @@ margin-top: 20px;
 display: flex;
 justify-content: space-between;
 align-items: center;
-background: #fff;
+background: #1c2b41;
 padding: 15px;
-border: 1px solid #ddd;
-border-radius: 8px;
 margin-bottom: 15px;
 transition: background 0.3s ease, transform 0.3s ease;
+color: #ece5dd;
+border-radius: 20px;
 }
 
 .tasks-item:hover {
 background: #ece5dd;
 transform: translateY(-3px);
+color: #1c2b41;
 }
 
 .tasks-item-title {
-font-weight: bold;
-color: #333;
+    font-weight: bold;
 }
-
 /* ==========================================================================
 Task Display and Actions
 ========================================================================== */
 .task-display {
 display: flex;
-flex-direction: column;
-gap: 5px;
+gap: 45px;
+align-items: center;
+
 }
 
 .task-actions {
@@ -319,7 +322,7 @@ transform: scale(1.2);
 .tasks-delete {
 background: none;
 border: none;
-color: #FF0000;
+color: #ae2e24;
 cursor: pointer;
 font-size: 18px;
 transition: transform 0.2s ease;

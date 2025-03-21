@@ -600,7 +600,7 @@ function toTitleCase(str) {
                                         onChange={() => toggleComplete(task)}
                                       />
                                       <span className="tasks-item-title">
-                                        {task.title}:
+                                        {task.title}
                                       </span>{" "}
                                       {task.description}
                                       {task.dueDate && (
@@ -614,10 +614,10 @@ function toTitleCase(str) {
                                           style={{
                                             background:
                                               task.priority === "Low"
-                                                ? "green"
+                                                ? "#216e4e"
                                                 : task.priority === "Medium"
-                                                ? "orange"
-                                                : "red",
+                                                ? "#7f5f01"
+                                                : "#ae2e24",
                                           }}
                                         >
                                           {task.priority}
@@ -651,7 +651,7 @@ function toTitleCase(str) {
                                           {task.pinned ? (
                                             <FaThumbtack
                                               style={{
-                                                color: "blue",
+                                                color: "#4a90e2",
                                                 marginRight: "5px",
                                               }}
                                             />
@@ -761,10 +761,10 @@ function toTitleCase(str) {
                                   style={{
                                     background:
                                       task.priority === "Low"
-                                        ? "green"
+                                        ? "#216e4e"
                                         : task.priority === "Medium"
-                                        ? "orange"
-                                        : "red",
+                                        ? "#7f5f01"
+                                        : "#ae2e24",
                                   }}
                                 >
                                   {task.priority}
@@ -907,7 +907,7 @@ function toTitleCase(str) {
                                               toggleComplete(task)
                                             }
                                           />
-                                          <h3>{task.title}</h3>
+                                          <h3>{task.title}:</h3>
                                           <p>{task.description}</p>
                                           {task.dueDate && (
                                             <p className="due-date">
@@ -920,10 +920,10 @@ function toTitleCase(str) {
                                               style={{
                                                 background:
                                                   task.priority === "Low"
-                                                    ? "green"
+                                                    ? "#216e4e"
                                                     : task.priority === "Medium"
-                                                    ? "orange"
-                                                    : "red",
+                                                    ? "#7f5f01"
+                                                    : "#ae2e24",
                                               }}
                                             >
                                               {task.priority}

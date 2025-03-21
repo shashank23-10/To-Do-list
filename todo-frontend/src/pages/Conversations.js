@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef, Fragment } from "react";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import "./Conversations.css";
 import kpmglogo from "../images/kpmg-logo.png";
 import { FaUser, FaPaperPlane, FaPaperclip, FaSmile } from "react-icons/fa";
@@ -46,9 +48,7 @@ function toTitleCase(str) {
 }
 
 // Helper function: tries to extract a JSON object from the message.
-// It checks if the message starts with a prefix ending with ": " and then a JSON object.
 const parseMessage = (msg) => {
-  // Check for a prefix ending with ": " followed by a JSON object.
   const regex = /.+:\s*(\{.*\})/;
   const match = msg.match(regex);
   if (match && match[1]) {
@@ -59,11 +59,40 @@ const parseMessage = (msg) => {
       return null;
     }
   }
-  // Otherwise, try to parse the message directly.
   try {
     return JSON.parse(msg);
   } catch (err) {
     return null;
+  }
+};
+
+// Updated renderMessageContent to use ReactMarkdown for AI replies
+const renderMessageContent = (msg) => {
+  const parsed = parseMessage(msg);
+  if (parsed && parsed.type === "file") {
+    let fileUrl = parsed.url;
+    if (fileUrl.startsWith("/")) {
+      fileUrl = `http://localhost:8000${fileUrl}`;
+    }
+    return (
+      <div className="file-link">
+        <a href={fileUrl} target="_blank" rel="noopener noreferrer">
+          {parsed.filename}
+        </a>
+      </div>
+    );
+  } else if (parsed && parsed.type === "text") {
+    // If the sender is Llama-Ai, render the text as Markdown.
+    if (parsed.sender && parsed.sender.toLowerCase() === "llama-ai") {
+      return (
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {parsed.text}
+        </ReactMarkdown>
+      );
+    }
+    return parsed.text;
+  } else {
+    return msg;
   }
 };
 
@@ -274,30 +303,6 @@ const Conversations = () => {
     setShowEmojiPicker(false);
   };
 
-  // Render message content.
-  // If a message is a file, it is rendered as a clickable link.
-  const renderMessageContent = (msg) => {
-    const parsed = parseMessage(msg);
-    if (parsed && parsed.type === "file") {
-      // Use the full URL if needed
-      let fileUrl = parsed.url;
-      if (fileUrl.startsWith("/")) {
-        fileUrl = `http://localhost:8000${fileUrl}`;
-      }
-      return (
-        <div className="file-link">
-          <a href={fileUrl} target="_blank" rel="noopener noreferrer">
-            {parsed.filename}
-          </a>
-        </div>
-      );
-    } else if (parsed && parsed.type === "text") {
-      return parsed.text;
-    } else {
-      return msg;
-    }
-  };
-
   return (
     <Fragment>
       <header className="header">
@@ -349,7 +354,9 @@ const Conversations = () => {
             }}
           >
             <div className="contact-avatar">L</div>
-            <div className="contact-name"> <h1>Llama-AI </h1></div>
+            <div className="contact-name">
+              <h1>Llama-AI</h1>
+            </div>
           </div>
           <h3>Contacts</h3>
           {/* Render regular contacts */}

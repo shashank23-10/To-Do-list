@@ -99,8 +99,7 @@ async def chat(input: UserInput, token: str = Depends(JWTBearer())):
     # Append the user's new message.
     messages.append({"role": input.role, "content": input.message})
     
-    # Check if the user's message asks about tasks.
-    # Also detect if the query includes priority information.
+    
     if any(keyword in input.message.lower() for keyword in ["task", "tasks", "todo", "todos", "work", "assignment", "job", "duty", 
                                                             "project", "responsibility", "deliverable"]):
         query = {"username": username}
