@@ -72,6 +72,7 @@ body {
     height: 40px;
     background: #BBDEFB;
     color: #000;
+    border: 4px solid #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -106,17 +107,19 @@ body {
 
 /* Receiver Avatar */
 .selected-receiver-avatar {
-    display: flex; /* Enables centering */
-    align-items: center; /* Vertically centers text */
-    justify-content: center; /* Horizontally centers text */
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
     width: 40px; 
     height: 40px; 
+    border: 4px solid #263238;
+    font-size: 10px;
     background: #4a90e2;
     color: #fff;
     border-radius: 50%;
     font-weight: bold;
     text-align: center;
-    font-size: 25px; /* Adjust text size */
+    font-size: 25px; 
 }
 
 /* Receiver Heading */
@@ -124,10 +127,10 @@ body {
     font-size: 30px;
     font-weight: 600;
     color: #4d4131;
-    padding-left: 10px; /* Keep space between avatar and heading */
-    margin: 0; /* Remove extra margins */
+    padding-left: 10px; 
+    margin: 0;
     display: flex;
-    align-items: center; /* Align text properly */
+    align-items: center; 
 }
 
 
@@ -136,7 +139,7 @@ body {
     flex: 1;
     padding: 15px;
     overflow-y: auto;
-    background: #ece5dd;
+    background: #ece5dd87;
     display: flex;
     flex-direction: column;
 }
@@ -165,6 +168,9 @@ body {
 }
 .chat-message.sent .message-dp{
     margin-left: 10px;
+    border: 4px solid #fff;
+    width: 40px; 
+    height: 40px; 
 }
 .chat-message.received {
     background: #ffffff;
@@ -178,6 +184,9 @@ body {
 }
 .chat-message.received .message-dp{
     margin-right:  10px;
+    border: 4px solid #263238;
+    width: 40px; 
+    height: 40px; 
 }
 /* New: Message DP inside chat bubble */
 .chat-message .message-dp {
