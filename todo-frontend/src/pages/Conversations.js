@@ -74,7 +74,7 @@ const Conversations = () => {
   }
 
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]); // Regular human contacts only
   const [selectedReceiver, setSelectedReceiver] = useState(null);
   const [chat, setChat] = useState([]); // For human chat messages
   const [aiChatHistory, setAiChatHistory] = useState([]); // For AI chat messages
@@ -106,7 +106,7 @@ const Conversations = () => {
     "⏳", "🔛", "🔝", "🔜", "☑️", "🔚", "🔙", "💲",
   ];
 
-  // Fetch users from backend and append the special AI contact ("Llama-AI")
+  // Fetch human users from backend (exclude currentUser)
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -114,9 +114,8 @@ const Conversations = () => {
         const usersData = response.data.users.filter(
           (user) => user.username.toLowerCase() !== currentUser.toLowerCase()
         );
-        // Sort alphabetically and append special AI contact
+        // Sort alphabetically
         usersData.sort((a, b) => a.username.localeCompare(b.username));
-        usersData.push({ username: "Llama-AI" });
         setUsers(usersData);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -129,7 +128,7 @@ const Conversations = () => {
   useEffect(() => {
     if (!selectedReceiver) return;
 
-    // When chatting with Llama-AI, skip WebSocket and use HTTP API chat logic
+    // When chatting with Llama-Ai, skip WebSocket and use HTTP API chat logic
     if (selectedReceiver.toLowerCase() === "llama-ai") {
       if (ws.current) {
         ws.current.close();
@@ -213,7 +212,7 @@ const Conversations = () => {
       // Append AI's reply as a JSON string
       setAiChatHistory((prev) => [
         ...prev,
-        JSON.stringify({ type: "text", sender: "Llama-AI", text: response.data.response }),
+        JSON.stringify({ type: "text", sender: "Llama-Ai", text: response.data.response }),
       ]);
       setMessage("");
     } catch (error) {
@@ -276,7 +275,7 @@ const Conversations = () => {
   };
 
   // Render message content.
-  // If a message is a file, it is rendered inside a "file-card" container.
+  // If a message is a file, it is rendered as a clickable link.
   const renderMessageContent = (msg) => {
     const parsed = parseMessage(msg);
     if (parsed && parsed.type === "file") {
@@ -298,11 +297,9 @@ const Conversations = () => {
       return msg;
     }
   };
-  
 
   return (
     <Fragment>
-      {/* Header */}
       <header className="header">
         <img className="logo" src={kpmglogo} alt="KPMG Logo" />
         <div className="profile-menu">
@@ -330,11 +327,32 @@ const Conversations = () => {
           )}
         </div>
       </header>
-
       <div className="chat-page">
         {/* Left Sidebar: Contacts List */}
         <div className="chat-sidebar">
+          {/* Display Llama-Ai contact separately */}
+          <div
+            className={`contact-item ${selectedReceiver && selectedReceiver.toLowerCase() === "llama-ai" ? "active" : ""}`}
+            onClick={() => {
+              setSelectedReceiver("Llama-Ai");
+              setMessage("");
+              setChat([]);
+              setAiChatHistory([]);
+            }}
+            style={{
+              margin: "10px 0",
+              padding: "10px",
+              borderRadius: "8px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center"
+            }}
+          >
+            <div className="contact-avatar">L</div>
+            <div className="contact-name"> <h1>Llama-AI </h1></div>
+          </div>
           <h3>Contacts</h3>
+          {/* Render regular contacts */}
           <ul className="contacts-list">
             {users.map((user) => (
               <li
@@ -342,7 +360,6 @@ const Conversations = () => {
                 className={`contact-item ${selectedReceiver === user.username ? "active" : ""}`}
                 onClick={() => {
                   setSelectedReceiver(user.username);
-                  // Clear previous messages when switching contacts
                   setMessage("");
                   setChat([]);
                   setAiChatHistory([]);
@@ -354,12 +371,11 @@ const Conversations = () => {
             ))}
           </ul>
         </div>
-
         {/* Right Panel: Chat Area */}
         <div className="chat-container">
           {selectedReceiver ? (
             selectedReceiver.toLowerCase() === "llama-ai" ? (
-              // Llama-AI (AI) chat panel
+              // Llama-Ai (AI) chat panel
               <>
                 <div className="chat-header">
                   <h3>{toTitleCase(selectedReceiver)}</h3>
