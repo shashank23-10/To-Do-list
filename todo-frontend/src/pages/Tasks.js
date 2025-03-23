@@ -166,7 +166,7 @@ function Tasks() {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/tasks", {
+      const response = await axios.get("https://to-do-list-0f6z.onrender.com/tasks", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const tasksData = Array.isArray(response.data)
@@ -196,7 +196,7 @@ function Tasks() {
         completed: false,
         username: currentUser,
       };
-      const response = await axios.post("http://127.0.0.1:8000/tasks", newTask, {
+      const response = await axios.post("https://to-do-list-0f6z.onrender.com/tasks", newTask, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -219,7 +219,7 @@ function Tasks() {
     if (task.pinned || pinnedTasks.length < 5) {
       try {
         const updatedTask = { ...task, pinned: !task.pinned };
-        await axios.put(`http://127.0.0.1:8000/tasks/${task._id}`, updatedTask, {
+        await axios.put(`https://to-do-list-0f6z.onrender.com/tasks/${task._id}`, updatedTask, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTasks((prevTasks) =>
@@ -253,7 +253,7 @@ function Tasks() {
         return;
       }
 
-      await axios.put(`http://127.0.0.1:8000/tasks/${taskId}`, updatedData, {
+      await axios.put(`https://to-do-list-0f6z.onrender.com/tasks/${taskId}`, updatedData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -274,7 +274,7 @@ function Tasks() {
 
   const deleteTask = async (taskId) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/tasks/${taskId}`, {
+      await axios.delete(`https://to-do-list-0f6z.onrender.com/tasks/${taskId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
@@ -290,7 +290,7 @@ function Tasks() {
     try {
       const updatedTask = { ...task, completed: !task.completed };
       updatedTask.status = updatedTask.completed ? "done" : "todo";
-      await axios.put(`http://127.0.0.1:8000/tasks/${task._id}`, updatedTask, {
+      await axios.put(`https://to-do-list-0f6z.onrender.com/tasks/${task._id}`, updatedTask, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -380,7 +380,7 @@ function Tasks() {
   const handleDeleteAccount = async () => {
     if (window.confirm("Are you sure you want to delete your account?")) {
       try {
-        await axios.delete("http://127.0.0.1:8000/auth/auth/delete", {
+        await axios.delete("https://to-do-list-0f6z.onrender.com/auth/auth/delete", {
           headers: { Authorization: `Bearer ${token}` },
         });
         localStorage.removeItem("token");
