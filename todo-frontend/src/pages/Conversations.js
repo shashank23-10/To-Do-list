@@ -174,7 +174,7 @@ const Conversations = () => {
       ws.current.close();
       setChat([]);
     }
-    const wsUrl = `ws://localhost:8000/ws/chat/${currentUser}/${selectedReceiver}`;
+    const wsUrl = `wss://to-do-list-0f6z.onrender.com/ws/chat/${currentUser}/${selectedReceiver}`;
     console.log("Connecting to WebSocket at:", wsUrl);
     ws.current = new WebSocket(wsUrl);
 
