@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 import kpmglogo from "../images/kpmg-logo.png";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function Signup() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -40,7 +42,7 @@ function Signup() {
         }
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/auth/auth/signup", {
+            const response = await axios.post("${API_URL}/auth/auth/signup", {
                 name,
                 email,
                 username,
