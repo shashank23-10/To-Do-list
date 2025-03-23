@@ -17,7 +17,7 @@ const handleDeleteAccount = async () => {
   if (window.confirm("Are you sure you want to delete your account?")) {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete("http://127.0.0.1:8000/auth/auth/delete", {
+      await axios.delete("https://to-do-list-0f6z.onrender.com/auth/auth/delete", {
         headers: { Authorization: `Bearer ${token}` },
       });
       localStorage.removeItem("token");
@@ -72,7 +72,7 @@ const renderMessageContent = (msg) => {
   if (parsed && parsed.type === "file") {
     let fileUrl = parsed.url;
     if (fileUrl.startsWith("/")) {
-      fileUrl = `http://localhost:8000${fileUrl}`;
+      fileUrl = `https://to-do-list-0f6z.onrender.com${fileUrl}`;
     }
     return (
       <div className="file-link">
@@ -139,7 +139,7 @@ const Conversations = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/auth/auth/all");
+        const response = await axios.get("https://to-do-list-0f6z.onrender.com/auth/auth/all");
         const usersData = response.data.users.filter(
           (user) => user.username.toLowerCase() !== currentUser.toLowerCase()
         );
@@ -234,7 +234,7 @@ const Conversations = () => {
       if (!conversationId) setConversationId(convId);
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:8000/api/todo-ai/",
+        "https://to-do-list-0f6z.onrender.com/api/todo-ai/",
         { message, conversation_id: convId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -260,7 +260,7 @@ const Conversations = () => {
     formData.append("file", file);
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post("http://localhost:8000/ws/upload", formData, {
+      const response = await axios.post("https://to-do-list-0f6z.onrender.com/ws/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
