@@ -42,7 +42,7 @@ function Signup() {
         }
 
         try {
-            const response = await axios.post("${API_URL}/auth/auth/signup", {
+            const response = await axios.post(`${API_URL}/auth/auth/signup`, {
                 name,
                 email,
                 username,
