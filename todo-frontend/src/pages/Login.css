@@ -17,7 +17,8 @@
 }
 
 .login-logo{
-    min-width: 150px;
+    min-width: 25px;
+    max-width: 75px;
 }
 
 .login-title {

@@ -320,6 +320,9 @@ const Conversations = () => {
                 Tasks
               </button>
               <button className="dropdown-item" onClick={handleLogout}>
+                Conversations
+              </button>
+              <button className="dropdown-item" onClick={handleLogout}>
                 Logout
               </button>
               <button className="dropdown-item" onClick={handleDeleteAccount}>

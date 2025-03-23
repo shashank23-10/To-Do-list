@@ -12,7 +12,6 @@ import {
   FaCalendar,
   FaThumbtack,
   FaUser,
-  FaTabletAlt,
 } from "react-icons/fa";
 
 // Helper: decode JWT token to get username (stored under "sub")
@@ -591,11 +590,13 @@ function toTitleCase(str) {
                                     </div>
                                   ) : (
                                     <div className="task-display">
-                                      <input
-                                        type="checkbox"
-                                        checked={task.completed || false}
-                                        onChange={() => toggleComplete(task)}
-                                      />
+                                      <div className="task-display-checkbox">
+                                        <input
+                                          type="checkbox"
+                                          checked={task.completed || false}
+                                          onChange={() => toggleComplete(task)}
+                                        />
+                                      </div>
                                       <span className="tasks-item-title">
                                         {task.title}
                                       </span>{" "}
@@ -739,12 +740,14 @@ function toTitleCase(str) {
                           </div>
                         ) : (
                           <>
-                            <div className="task-display">
-                              <input
-                                type="checkbox"
-                                checked={task.completed || false}
-                                onChange={() => toggleComplete(task)}
-                              />
+                            <div className="task-display-other-views">
+                              <div className="task-display-checkbox">
+                                <input
+                                  type="checkbox"
+                                  checked={task.completed || false}
+                                  onChange={() => toggleComplete(task)}
+                                />
+                              </div>
                               <h3>{task.title}</h3>
                               <p>{task.description}</p>
                               {task.dueDate && (
@@ -768,7 +771,7 @@ function toTitleCase(str) {
                                 </p>
                               )}
                             </div>
-                            <div className="task-actions">
+                            <div className="task-actions-other-views">
                               <button
                                 onClick={() => {
                                   setEditingTask(task._id);
@@ -788,7 +791,7 @@ function toTitleCase(str) {
                                 {task.pinned ? (
                                   <FaThumbtack
                                     style={{
-                                      color: "blue",
+                                      color: "#4a90e2",
                                       marginRight: "5px",
                                     }}
                                   />
@@ -896,14 +899,14 @@ function toTitleCase(str) {
                                           </button>
                                         </div>
                                       ) : (
-                                        <div className="task-display">
-                                          <input
-                                            type="checkbox"
-                                            checked={task.completed || false}
-                                            onChange={() =>
-                                              toggleComplete(task)
-                                            }
-                                          />
+                                        <div className="task-display-other-views">
+                                          <div className="task-display-checkbox">
+                                            <input
+                                              type="checkbox"
+                                              checked={task.completed || false}
+                                              onChange={() => toggleComplete(task)}
+                                            />
+                                          </div>
                                           <h3>{task.title}:</h3>
                                           <p>{task.description}</p>
                                           {task.dueDate && (
@@ -915,6 +918,7 @@ function toTitleCase(str) {
                                             <p
                                               className="priority"
                                               style={{
+                                                color: "#ece5dd", 
                                                 background:
                                                   task.priority === "Low"
                                                     ? "#216e4e"
@@ -928,7 +932,7 @@ function toTitleCase(str) {
                                           )}
                                         </div>
                                       )}
-                                      <div className="task-actions">
+                                      <div className="task-actions-other-views">
                                         {editingTask !== task._id && (
                                           <>
                                             <button
@@ -958,7 +962,7 @@ function toTitleCase(str) {
                                               {task.pinned ? (
                                                 <FaThumbtack
                                                   style={{
-                                                    color: "blue",
+                                                    color: "#4a90e2",
                                                     marginRight: "5px",
                                                   }}
                                                 />

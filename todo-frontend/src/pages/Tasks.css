@@ -250,14 +250,14 @@ padding: 10px 15px;
 border-radius: 6px;
 border: 2px solid #4a90e2;
 background: none;
-color: #4a90e2;
+color:#ece5dd;
 font-weight: 600;
 cursor: pointer;
 transition: background 0.3s ease;
 }
 
 .view-toggle button:hover {
-background: #4a90e2;
+background:#1c2b41;
 color: #fff;
 }
 
@@ -297,15 +297,64 @@ font-weight: bold;
     ========================================================================== */
 .task-display {
 display: flex;
-flex-direction: column;
-gap: 5px;
+gap: 15px;
 align-items: center;
+}
+
+.task-display-checkbox input{
+    appearance: none;
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #ece5dd;
+    border: 2px solid #333;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.task-display-checkbox input:checked {
+    background-color:#005bb5;
 }
 
 .task-actions {
 display: flex;
 gap: 10px;
 margin-top: 10px;
+}
+
+.task-display-other-views {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+    
+.task-display-checkbox input{
+    appearance: none;
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #ece5dd;
+    border: 2px solid #333;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+    
+.task-display-checkbox input:checked {
+    background-color:#005bb5;
+}
+
+.task-actions-other-views {
+display: flex;
+gap: 10px;
+margin-top: 10px;
+align-items: center;
+justify-content: center;
 }
 
 .tasks-edit {
@@ -382,10 +431,11 @@ display: grid;
 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 gap: 15px;
 margin-top: 20px;
+background:#004065;
 }
 
 .task-card {
-background: #fff;
+background:#004065;
 padding: 15px;
 border-radius: 10px;
 box-shadow: 2px 2px 10px rgba(0,0,0,0.15);
@@ -404,7 +454,6 @@ margin-bottom: 8px;
 
 .task-card p {
 font-size: 14px;
-color: #666;
 }
 
 /* ==========================================================================
@@ -412,15 +461,14 @@ color: #666;
     ========================================================================== */
 .board-container {
 display: flex;
-gap: 20px;
+gap: 32px;
 overflow-x: auto;
 padding: 20px;
-background: linear-gradient(to right, #4a90e2, rgb(0,82,156));
 border-radius: 12px;
 }
 
 .board-column {
-background: #f0f2f5;
+background:#1c2b41;
 padding: 15px;
 border-radius: 10px;
 width: 280px;
@@ -433,22 +481,21 @@ box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 .board-column-title {
 font-size: 18px;
 text-align: center;
-color: #333;
+color:#ece5dd;
 margin-bottom: 10px;
 font-weight: bold;
 }
 
 .board-droppable {
-background: #fff;
+background: #004065;
 border-radius: 8px;
 padding: 10px;
 min-height: 150px;
-border: 2px dashed #ccc;
 transition: background 0.3s ease;
 }
 
 .board-task-card {
-background: #fff;
+background:#1c2b41;
 border-radius: 6px;
 padding: 10px;
 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -464,20 +511,20 @@ box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 .board-task-card h3 {
 font-size: 16px;
 margin-bottom: 5px;
-color: #333;
+color: #ece5dd;
 }
 
 .board-task-card p {
 font-size: 14px;
 margin-bottom: 5px;
-color: #666;
+color: #ece5dd;
 }
 
 /* ==========================================================================
     Calendar View Styling
     ========================================================================== */
 .calendar-view {
-background: #fff;
+background:#1c2b41;
 padding: 20px;
 border-radius: 12px;
 box-shadow: 0 6px 12px rgba(0,0,0,0.1);
@@ -496,7 +543,7 @@ margin-bottom: 20px;
 .calendar-header h2 {
 font-size: 22px;
 font-weight: bold;
-color: #333;
+color: #ece5dd;
 }
 
 .calendar-header button {
@@ -522,6 +569,7 @@ gap: 10px;
 .calendar-weekdays {
 display: grid;
 grid-template-columns: repeat(7, 1fr);
+gap: 5px;
 text-align: center;
 margin-bottom: 10px;
 }
@@ -529,9 +577,9 @@ margin-bottom: 10px;
 .calendar-weekday {
 font-weight: bold;
 padding: 10px 0;
-background: #f5f5f5;
-border: 1px solid #ddd;
+background: #004065;
 border-radius: 6px;
+color: #ece5dd;
 }
 
 .calendar-week {
@@ -542,8 +590,8 @@ gap: 5px;
 
 .calendar-day {
 min-height: 100px;
-background: #fafafa;
-border: 1px solid #ddd;
+background: #004065;
+color: #ece5dd;
 border-radius: 6px;
 padding: 5px;
 position: relative;
@@ -562,6 +610,7 @@ overflow: hidden;
 }
 
 .calendar-task {
+font-weight: 800;
 background: #4a90e2;
 color: #fff;
 padding: 2px 4px;
@@ -916,6 +965,13 @@ color: #357ABD;
     flex: 1 1 100%;
     max-width: 100%;
 }
+.task-display{
+    flex-direction: column;
+    gap:5px;
+}
+.tasks-item{
+    flex-direction: column;
+}
 .add-task-box, .list-tasks-box {
     padding: 20px;
 }
@@ -957,14 +1013,26 @@ color: #357ABD;
     flex-direction: column;
 }
 
-.left-panel, .right-panel {
+.left-panel{
     flex: 1 1 100%;
     max-width: 100%;
+}
+.right-panel {
+    flex: 1 1 100%;
+    min-width: 100%;
 }
 
 .add-task-box,
 .list-tasks-box {
     padding: 20px;
+}
+
+.task-display{
+    flex-direction: column;
+    gap: 10px;
+}
+.tasks-item{
+    flex-direction: column;
 }
 
 .tablet-container {
@@ -990,6 +1058,13 @@ color: #357ABD;
 .task-layout {
     gap: 15px;
 }
+.task-display{
+    flex-direction: column;
+    gap: 10px;
+}
+.tasks-item{
+    flex-direction: column;
+}
 .tablet-container {
     gap: 0.5rem;
 }
@@ -1008,6 +1083,13 @@ color: #357ABD;
 }
 .task-layout {
     gap: 20px;
+}
+.task-display{
+    flex-direction: column;
+    gap: 10px;
+}
+.tasks-item{
+    flex-direction: column;
 }
 .board-container {
     padding: 15px;

@@ -19,7 +19,6 @@ body {
     background: #888; 
     transition: background 0.3s;
 }
-
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
@@ -125,13 +124,12 @@ body {
     justify-content: center; 
     width: 40px; 
     height: 40px; 
-    font-size: 10px;
+    font-size: 25px;
     background: #4a90e2;
     color: #fff;
     border-radius: 50%;
     font-weight: bold;
     text-align: center;
-    font-size: 25px; 
 }
 
 /* Receiver Heading */
@@ -144,7 +142,6 @@ body {
     display: flex;
     align-items: center; 
 }
-
 
 /* Chat Window */
 .chat-window {
@@ -194,12 +191,12 @@ body {
     margin-left: 10px;
 }
 .chat-message.received .message-dp{
-    margin-right:  10px;
+    margin-right: 10px;
     border: 4px solid #263238;
     width: 40px; 
     height: 40px; 
 }
-/* New: Message DP inside chat bubble */
+/* Message DP inside chat bubble */
 .chat-message .message-dp {
     display: inline-block;
     width: 30px;
@@ -214,7 +211,7 @@ body {
     flex-shrink: 0;
 }
 
-/* New: Message text styling inside chat bubble */
+/* Message text styling inside chat bubble */
 .chat-message .message-text {
     display: inline-block;
     font-size: 14px;
@@ -237,7 +234,7 @@ body {
     font-size: 16px;
 }
     
-/* Updated Send Button: now a circular button with an icon */
+/* Updated Send Button: circular with icon */
 .chat-input-area button {
     margin: 0 10px;
     padding: 10px;
@@ -280,3 +277,68 @@ body {
     text-decoration: underline;
 }
 
+/*-----------------RESPONSIVE STYLES-----------------*/
+
+/* For devices with max-width 1200px */
+@media (max-width: 1200px) {
+    .chat-sidebar {
+        width: 35%;
+    }
+    .chat-container {
+        width: 65%;
+    }
+}
+
+/* For devices with max-width 992px */
+@media (max-width: 992px) {
+    .chat-window{
+        overflow-y: auto;
+    }
+    .chat-sidebar {
+        width: 40%;
+    }
+    .chat-container {
+        width: 60%;
+    }
+}
+
+/* For devices with max-width 768px */
+@media (max-width: 768px) {
+    /* Stack the layout vertically */
+    .chat-window{
+        overflow-y: auto;
+    }
+    .chat-page {
+        flex-direction: column;
+    }
+    .chat-sidebar,
+    .chat-container {
+        width: 100%;
+    }
+    /* When chat is active (e.g., user has pressed a chat), hide the sidebar */
+    .chat-page.chat-active .chat-sidebar {
+        display: none;
+    }
+}
+
+/* For devices with max-width 576px */
+@media (max-width: 576px) {
+    .chat-window{
+        overflow-y: auto;
+    }
+    .chat-header, .chat-header-llama {
+        padding: 10px;
+    }
+    .chat-message {
+        padding: 8px 12px;
+    }
+    .chat-input-area input {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+    .chat-input-area button {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+}
