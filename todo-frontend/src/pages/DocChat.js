@@ -72,7 +72,7 @@ reader.onload = async (e) => {
     };
     try {
     const res = await axios.post(
-        "http://localhost:8000/docchat/upload_document",
+        "https://to-do-list-0f6z.onrender.com/docchat/upload_document",
         doc,
         {
         headers: {
@@ -110,7 +110,7 @@ const userMessage = { role: "user", content: message };
 setDocChatHistory((prev) => [...prev, userMessage]);
 try {
     const res = await axios.post(
-    "http://localhost:8000/docchat/doc_chat",
+    "https://to-do-list-0f6z.onrender.com/docchat/doc_chat",
     {
         doc_id: uploadedDoc.id,
         conversation_id: conversation_id,
