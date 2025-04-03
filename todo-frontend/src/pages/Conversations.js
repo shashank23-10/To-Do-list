@@ -307,6 +307,9 @@ const Conversations = () => {
     <Fragment>
       <header className="header">
         <img className="logo" src={kpmglogo} alt="KPMG Logo" />
+        <a href="/tasks">Tasks</a>
+        <a href="/conversations">Conversations</a>
+        <a href="/docchat">Chat with Document</a>
         <div className="profile-menu">
           <button
             className="profile-button"
@@ -319,8 +322,8 @@ const Conversations = () => {
               <button className="dropdown-item" onClick={() => (window.location.href = "/tasks")}>
                 Tasks
               </button>
-              <button className="dropdown-item" onClick={handleLogout}>
-                Conversations
+              <button className="dropdown-item" onClick={() => (window.location.href = "/docchat")}>
+                Chat with Document
               </button>
               <button className="dropdown-item" onClick={handleLogout}>
                 Logout

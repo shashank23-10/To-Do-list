@@ -1,0 +1,220 @@
+/* Overall chat page container: max width 40% of viewport */
+.doc_chat_chat-page {
+display: flex;
+flex-direction: row;
+max-width: 100vw; /* 40% of viewport width */
+min-height: 90vh;
+max-height: 90vh;
+overflow: hidden;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Left Sidebar: Document upload/info */
+.doc_chat_doc-sidebar {
+flex-basis: 35%;
+background-color: #1c2b41;
+padding: 20px;
+box-sizing: border-box;
+text-align: center;
+color: #c0d0fa;
+}
+
+.doc_chat_document-info, .doc_chat_upload-container {
+margin-bottom: 20px;
+}
+
+.doc_chat_upload-container>h3{
+    color: wheat;
+}
+
+.doc_chat_document-info .doc_chat_doc-avatar {
+    width: 60px;
+    height: 60px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 28px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doc_chat_document-info h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+.doc_chat_document-info p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.doc_chat_upload-container h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+}
+
+.doc_chat_upload-container input[type="file"] {
+    margin-bottom: 10px;
+}
+
+.doc_chat_upload-container button,
+.doc_chat_document-info button {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.doc_chat_upload-container button:hover,
+.doc_chat_document-info button:hover {
+    background-color: #0056b3;
+}
+
+/* Right Panel: Chat Area */
+.doc_chat_chat-container {
+    flex-basis: 65%;
+    display: flex;
+    flex-direction: column;
+    background-color: #bbdefb;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Chat Header */
+.doc_chat_chat-header {
+    display: flex;
+    align-items: center;
+    background: #1c2b41;
+    font-weight: 800;
+    width: 100%;
+    padding: 10PX;
+    color: #becefa;
+}
+
+.doc_chat_chat-header .doc_chat_selected-receiver-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #4a90e2;
+    color: #fff;
+    font-size: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.doc_chat_chat-header .doc_chat_selected-receiver-heading {
+font-size: 20px;
+}
+
+/* Chat Window */
+.doc_chat_chat-window {
+    width: 100%;
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #0a486d;
+}
+
+/* Chat Messages */
+.doc_chat_chat-message {
+display: flex;
+margin-bottom: 10px;
+}
+
+.doc_chat_chat-message.sent {
+flex-direction: row-reverse;
+}
+
+.doc_chat_chat-message .doc_chat_message-dp {
+width: 40px;
+height: 40px;
+background-color: #007bff;
+color: #fff;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 16px;
+margin: 0 10px;
+}
+
+.doc_chat_chat-message .doc_chat_message-text {
+max-width: 75%;
+padding: 8px 12px;
+border-radius: 8px;
+background-color: #e1f5fe;
+font-size: 14px;
+color: #333;
+}
+
+.doc_chat_chat-message.received .doc_chat_message-text {
+background-color: #fff3e0;
+}
+
+/* Chat Input Area */
+.doc_chat_chat-input-area {
+    width: 100%;
+    background-color: #1c2b41;
+    padding: 10px 15px;
+display: flex;
+align-items: center;
+}
+
+.doc_chat_chat-input-area button {
+    margin: 0 10px;
+    padding: 10px;
+    border: none;
+    background: #4a90e2;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.doc_chat_chat-input-area input[type="text"] {
+flex: 1;
+padding: 10px 15px;
+font-size: 14px;
+border: 1px solid #ccc;
+border-radius: 20px;
+outline: none;
+}
+
+.doc_chat_chat-input-area input[type="text"]:focus {
+border-color: #007bff;
+}
+
+.doc_chat_chat-input-area button:last-child {
+margin-left: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+.doc_chat_chat-page {
+    flex-direction: column;
+    max-width: 90vw;
+}
+.doc_chat_doc-sidebar, .doc_chat_chat-container {
+    flex-basis: auto;
+    width: 100%;
+}
+.doc_chat_chat-input-area {
+    flex-direction: column;
+}
+.doc_chat_chat-input-area input[type="text"] {
+    margin-bottom: 10px;
+}
+}

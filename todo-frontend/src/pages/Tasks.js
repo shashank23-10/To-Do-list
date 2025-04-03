@@ -391,15 +391,18 @@ function Tasks() {
     }
   };
 
-function toTitleCase(str) {
-  if (!str) return "";
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
+  function toTitleCase(str) {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
 
   return (
     <Fragment>
       <header className="header">
         <img className="logo" src={kpmglogo} alt="KPMG Logo" />
+        <a href="/tasks">Tasks</a>
+        <a href="/conversations">Conversations</a>
+        <a href="/docchat">Chat with Document</a>
         <div className="profile-menu">
           <button
             className="profile-button"
@@ -411,6 +414,9 @@ function toTitleCase(str) {
             <div className="profile-dropdown">
               <button className="dropdown-item" onClick={() => window.location.href = '/conversations'}>
                 Conversations
+              </button>
+              <button className="dropdown-item" onClick={() => window.location.href = '/docchat'}>
+                Chat with Document
               </button>
               <button className="dropdown-item" onClick={handleLogout}>
                 Logout
